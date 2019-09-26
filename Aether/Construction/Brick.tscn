@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Aether/Construction/Brick.gd" type="Script" id=1]
+
+[sub_resource type="CubeMesh" id=1]
+
+[node name="BRICK" type="Spatial"]
+script = ExtResource( 1 )
+extents = Vector3( 1, 1, 1 )
+
+[node name="BrickCollision" type="StaticBody" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="BrickCollision"]
+mesh = SubResource( 1 )
+material/0 = null

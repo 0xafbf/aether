@@ -1,0 +1,166 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Aether/GameUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Aether/grid.tres" type="Material" id=3]
+[ext_resource path="res://MultiMesh.gd" type="Script" id=4]
+[ext_resource path="res://DebugDraw.gd" type="Script" id=5]
+[ext_resource path="res://Aether/Construction/Brick.tscn" type="PackedScene" id=6]
+
+[sub_resource type="PrismMesh" id=1]
+
+[sub_resource type="CylinderMesh" id=2]
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.027451, 0.247059, 1, 1 )
+
+[sub_resource type="SphereMesh" id=5]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="MultiMesh" id=6]
+mesh = SubResource( 5 )
+
+[sub_resource type="AudioStreamMicrophone" id=7]
+
+[node name="World" type="Spatial"]
+
+[node name="Character" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98587, 3.02774, 4.64149 )
+
+[node name="VehicleBody" type="VehicleBody" parent="."]
+editor/display_folded = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.51607, 0.139472, -5.60917 )
+mass = 400.0
+engine_force = 10.0
+steering = 0.5
+
+[node name="CollisionPolygon" type="CollisionPolygon" parent="VehicleBody"]
+depth = 1.14
+polygon = PoolVector2Array( -0.122777, 2.00392, -1.09029, 0.0613927, 0.854863, 0.0678378 )
+
+[node name="MeshInstance" type="MeshInstance" parent="VehicleBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.5, -0.112881, 1.03168, 0.0195624 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="VehicleWheel" type="VehicleWheel" parent="VehicleBody"]
+transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, 0.672191, 0.0607215, 0.728024 )
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.1
+suspension_travel = 0.1
+suspension_stiffness = 10.0
+
+[node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel"]
+transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="VehicleWheel3" type="VehicleWheel" parent="VehicleBody"]
+transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, 0.672191, 0.0607215, -0.69191 )
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.1
+suspension_travel = 0.1
+suspension_stiffness = 10.0
+
+[node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel3"]
+transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="VehicleWheel2" type="VehicleWheel" parent="VehicleBody"]
+transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, -0.903142, 0.0607215, 0.728024 )
+wheel_radius = 0.1
+suspension_travel = 0.1
+suspension_stiffness = 10.0
+
+[node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel2"]
+transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="VehicleWheel4" type="VehicleWheel" parent="VehicleBody"]
+transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, -0.903142, 0.0607215, -0.69191 )
+wheel_radius = 0.1
+suspension_travel = 0.1
+suspension_stiffness = 10.0
+
+[node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel4"]
+transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.06, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.696481, 0.533257, -0.480158, 0, 0.669139, 0.743137, 0.717576, -0.517581, 0.466042, 0.127564, 6.81618, 0 )
+shadow_enabled = true
+
+[node name="Control" parent="." instance=ExtResource( 2 )]
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81746, 0, -0.987652 )
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05556, 0.987652 )
+width = 38.9814
+height = 2.03807
+depth = 35.035
+material = ExtResource( 3 )
+
+[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60477, 1.81941, 6.50996 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
+material = ExtResource( 3 )
+
+[node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0954, 1.81941, -4.35343 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
+material = ExtResource( 3 )
+
+[node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 0.700982, 0.713179, 0, -0.713179, 0.700982, 0.138609, -0.0747612, 11.9277 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
+material = ExtResource( 3 )
+
+[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.46492, 0 )
+multimesh = SubResource( 6 )
+script = ExtResource( 4 )
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
+script = ExtResource( 5 )
+
+[node name="BRICK" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.00787809, 0, 0.999969, 0.457876, 0.889009, -0.0036073, -0.888981, 0.45789, 0.0070037, 1.75519, 1.06, 2.03624 )
+extents = Vector3( 0.5, 1, 1.5 )
+
+[node name="BRICK4" parent="." instance=ExtResource( 6 )]
+transform = Transform( -0.653866, 0, 0.756611, 0, 1, 0, -0.756611, 0, -0.653866, 8.84148, 1.06, 1.46629 )
+extents = Vector3( 2, 0.5, 3.5 )
+
+[node name="BRICK3" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.00787809, 0, 0.999969, 0, 1, 0, -0.999969, 0, 0.00787809, 0.396231, 1.06, -2.98154 )
+extents = Vector3( 0.5, 1, 1.5 )
+
+[node name="BRICK2" parent="." instance=ExtResource( 6 )]
+transform = Transform( 0.00787809, 0, 0.999969, 0.466277, 0.884631, -0.00367349, -0.884604, 0.466291, 0.00696921, -2.11642, 2.2098, -2.84995 )
+extents = Vector3( 0.5, 1, 1.5 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.583596, 0.643459, 0.192025 )
+stream = SubResource( 7 )

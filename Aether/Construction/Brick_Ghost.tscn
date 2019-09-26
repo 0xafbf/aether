@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Aether/Construction/Brush.gd" type="Script" id=1]
+[ext_resource path="res://Aether/Construction/M_Brush_Build.tres" type="Material" id=2]
+[ext_resource path="res://Aether/Construction/M_Brush_Destroy.tres" type="Material" id=3]
+[ext_resource path="res://Aether/Construction/M_Brush_Edit.tres" type="Material" id=4]
+
+[sub_resource type="CubeMesh" id=1]
+
+[node name="Brick" type="Spatial"]
+script = ExtResource( 1 )
+build_mat = ExtResource( 2 )
+destroy_mat = ExtResource( 3 )
+edit_mat = ExtResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
