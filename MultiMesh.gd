@@ -6,7 +6,7 @@ export var y_steps = 20
 
 export var x_size = 4
 export var y_size = 4
-export var primitive = Mesh.PRIMITIVE_LINES
+
 
 var accum: float = 0
 

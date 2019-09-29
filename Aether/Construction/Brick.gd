@@ -2,13 +2,8 @@ extends Spatial
 
 class_name Brick
 
-onready var brick_collision = $BrickCollision
-
-
 export var margin = 0.2
-
 export var extents: Vector3 setget set_extents
-
 var snap_size = 0.5
 
 tool
@@ -22,19 +17,22 @@ func set_extents(in_extents):
 	extents = extents * snap_size
 	update_collision()
 	
-	
 var shape_owner = -1
+
+onready var brick_collision: StaticBody = $BrickCollision
+onready var brick_mesh = $BrickCollision/MeshInstance
+
 func update_collision():
 	var shape = BoxShape.new()
 	shape.extents = extents
-	if $BrickCollision:
+	if brick_collision:
 		if shape_owner == -1:
-			shape_owner = $BrickCollision.create_shape_owner(self)
+			shape_owner = brick_collision.create_shape_owner(self)
 			
-		$BrickCollision.shape_owner_clear_shapes(shape_owner)
-		$BrickCollision.shape_owner_add_shape(shape_owner, shape)
+		brick_collision.shape_owner_clear_shapes(shape_owner)
+		brick_collision.shape_owner_add_shape(shape_owner, shape)
 		# $BrickCollision/CollisionShape. = shape
-		$BrickCollision/MeshInstance.scale = extents
+		brick_mesh.scale = extents
 
 func _ready():
 	set_extents(extents)
