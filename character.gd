@@ -11,7 +11,8 @@ var brush: Brush
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	get_brush()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,26 +22,14 @@ func _ready():
 export var cam_speed = 0.003
 var pitch = 0
 var yaw = 0
-var rotation_snaps = 48
 
 func _input(event):
 	if event.is_action_pressed("jump"):
 		jump()
 	elif event.is_action_pressed("fire"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		fire()
-	elif event.is_action_pressed("slot_1"):
-		get_brush().set_mode(Brush.BRUSH_OFF)
-	elif event.is_action_pressed("slot_2"):
-		get_brush().set_mode(Brush.BRUSH_BUILD)
-	elif event.is_action_pressed("slot_3"):
-		get_brush().set_mode(Brush.BRUSH_DESTROY)
-	elif event.is_action_pressed("slot_4"):
-		get_brush().set_mode(Brush.BRUSH_EDIT)
-
-	elif event.is_action_pressed("variant_next"):
-		get_brush().spawn_rotation += (TAU/rotation_snaps)
-	elif event.is_action_pressed("variant_previous"):
-		get_brush().spawn_rotation -= (TAU/rotation_snaps)
+	
 
 	elif event is InputEventMouseMotion:
 		var cam_angular_vel = event.relative * cam_speed
@@ -57,8 +46,12 @@ func _input(event):
 func get_brush():
 	if !brush:
 		brush = brick_ghost_template.instance()
-		get_tree().get_root().add_child(brush)
+		add_brush_to_root()
 	return brush
+
+func add_brush_to_root():
+	get_tree().get_root().call_deferred("add_child", brush)
+
 
 func fire():
 	if brush:

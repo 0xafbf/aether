@@ -35,6 +35,7 @@ func update_collision():
 		brick_mesh.scale = extents
 
 func _ready():
+	print("calling ready")
 	set_extents(extents)
 
 func get_suggested_build_direction(world_position):
@@ -76,4 +77,12 @@ func get_snapping_position(world_position):
 	
 	return transform.xform(pos)
 	
-	
+
+export var skin = 0 setget set_skin
+enum { SKIN_0, SKIN_WOOD, SKIN_METAL }
+export(Array, Material) var skin_materials 
+func set_skin(skin_id):
+	skin_id = clamp(skin_id, 0, skin_materials.size()-1)
+	if skin_id != skin:
+		skin = skin_id
+		$BrickCollision/MeshInstance.material_override = skin_materials[skin]

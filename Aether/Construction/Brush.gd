@@ -2,7 +2,14 @@ extends Spatial
 
 class_name Brush
 
-enum {BRUSH_OFF, BRUSH_BUILD, BRUSH_DESTROY, BRUSH_EDIT, BRUSH_EDITING}
+enum {
+	BRUSH_OFF, 
+	BRUSH_BUILD, 
+	BRUSH_DESTROY, 
+	BRUSH_EDIT, 
+	BRUSH_EDITING,
+	BRUSH_PAINT,
+}
 
 var current_mode = BRUSH_OFF
 
@@ -10,6 +17,7 @@ export var build_mat: Material
 export var destroy_mat: Material
 export var edit_mat: Material
 export var editing_mat: Material
+export var paint_mat: Material
 
 var spawn_rotation = 0.0
 var snap_size = 0.5
@@ -48,6 +56,8 @@ func set_mode(new_mode):
 		brush_mesh.material_override = edit_mat
 	elif current_mode == BRUSH_EDITING:
 		brush_mesh.material_override = editing_mat
+	elif current_mode == BRUSH_PAINT:
+		brush_mesh.material_override = paint_mat
 
 
 var extents = Vector3(1,1,1)
@@ -69,7 +79,6 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 			return
 		var resize_delta = resize_current_point - last_hit_position
 		var local_resize_delta = transform.basis.xform_inv(resize_delta)
-		print(resize_axis)
 		local_resize_delta *= resize_axis
 		#local_resize_delta /= snap_size
 		var resize_coords = Vector3()
@@ -79,7 +88,6 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 		resize_coords *= snap_size
 
 		var final_extents = resize_previous_extents + resize_coords
-		print(final_extents)
 		set_extents(final_extents)
 		translation = resize_starting_point + transform.basis.xform(resize_coords * resize_axis)
 
@@ -117,6 +125,10 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 			translation = brick.translation
 			set_target(brick)
 			setup_resize(hit_result)
+		elif current_mode == BRUSH_PAINT:
+			rotation = brick.rotation
+			translation = brick.translation
+			set_target(brick)
 
 	else:
 		set_target(null)
@@ -211,5 +223,40 @@ func fire():
 		start_resize()
 	elif current_mode == BRUSH_EDITING:
 		stop_resize()
+	elif current_mode == BRUSH_PAINT:
+		paint_target()
+	
+var active_skin = 0 # this could work like a block type
 
+func set_active_skin(skin_id):
+	active_skin = clamp(skin_id, 0, 1)
+	print("painting %d" % active_skin)
+	
+func paint_target():
+	if target:
+		print("painting %d" % active_skin)
+		target.set_skin(active_skin)
 
+var rotation_snaps = 48
+func _input(event):
+	if event.is_action_pressed("slot_1"):
+		set_mode(BRUSH_OFF)
+	elif event.is_action_pressed("slot_2"):
+		set_mode(BRUSH_BUILD)
+	elif event.is_action_pressed("slot_3"):
+		set_mode(BRUSH_DESTROY)
+	elif event.is_action_pressed("slot_4"):
+		set_mode(BRUSH_EDIT)
+	elif event.is_action_pressed("slot_5"):
+		set_mode(BRUSH_PAINT)
+
+	if current_mode == BRUSH_PAINT:
+		if event.is_action_pressed("variant_next"):
+			set_active_skin(active_skin+1)
+		elif event.is_action_pressed("variant_previous"):
+			set_active_skin(active_skin-1)
+	else:
+		if event.is_action_pressed("variant_next"):
+			spawn_rotation += (TAU/rotation_snaps)
+		elif event.is_action_pressed("variant_previous"):
+			spawn_rotation -= (TAU/rotation_snaps)

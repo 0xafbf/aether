@@ -1,15 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Aether/Construction/Brick.gd" type="Script" id=1]
+[ext_resource path="res://Aether/Construction/Bricks/brick_mat_0.tres" type="Material" id=2]
+[ext_resource path="res://Aether/Construction/Bricks/brick_mat_1.tres" type="Material" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 
 [node name="BRICK" type="Spatial"]
 script = ExtResource( 1 )
-extents = Vector3( 1, 1, 1 )
+extents = Vector3( 0.5, 0.5, 0.5 )
+skin_materials = [ ExtResource( 2 ), ExtResource( 3 ) ]
 
 [node name="BrickCollision" type="StaticBody" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="BrickCollision"]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+material_override = ExtResource( 2 )
 mesh = SubResource( 1 )
 material/0 = null

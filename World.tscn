@@ -129,10 +129,10 @@ depth = 6.09823
 material = ExtResource( 3 )
 
 [node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 0.700982, 0.713179, 0, -0.713179, 0.700982, 0.138609, -0.0747612, 11.9277 )
-width = 2.66832
-height = 4.92743
-depth = 6.09823
+transform = Transform( 1, 0, 0, 0, 0.773949, 0.633248, 0, -0.633248, 0.773949, -3.51215, -0.66592, 12.8399 )
+width = 3.10622
+height = 7.7491
+depth = 8.17634
 material = ExtResource( 3 )
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
@@ -148,8 +148,8 @@ transform = Transform( 0.00787809, 0, 0.999969, 0.457876, 0.889009, -0.0036073, 
 extents = Vector3( 0.5, 1, 1.5 )
 
 [node name="BRICK4" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.653866, 0, 0.756611, 0, 1, 0, -0.756611, 0, -0.653866, 9.0674, 1.07273, 5.02053 )
-extents = Vector3( 2, 0.5, 3 )
+transform = Transform( -0.653866, 0, 0.756611, 0, 1, 0, -0.756611, 0, -0.653866, 9.0674, 2.06096, 5.02053 )
+extents = Vector3( 1.5, 0.5, 3 )
 
 [node name="BRICK3" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.00787809, 0, 0.999969, 0, 1, 0, -0.999969, 0, 0.00787809, 0.396231, 1.06, -2.98154 )
@@ -158,3 +158,8 @@ extents = Vector3( 0.5, 1, 1.5 )
 [node name="BRICK2" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.00787809, 0, 0.999969, 0.466277, 0.884631, -0.00367349, -0.884604, 0.466291, 0.00696921, -2.11642, 2.2098, -2.84995 )
 extents = Vector3( 0.5, 1, 1.5 )
+
+[node name="BRICK5" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.78142, 0.612719, 9.15637 )
+extents = Vector3( 2, 0.5, 2 )
+skin = 1
