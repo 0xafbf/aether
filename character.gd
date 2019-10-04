@@ -42,6 +42,8 @@ func _input(event):
 		var evt = event as InputEventKey
 		if evt.pressed && evt.scancode == KEY_F11:
 			OS.window_fullscreen = !OS.window_fullscreen
+		if evt.pressed && evt.scancode == KEY_ESCAPE:
+			get_tree().quit()
 
 func get_brush():
 	if !brush:

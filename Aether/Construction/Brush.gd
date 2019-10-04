@@ -9,6 +9,7 @@ enum {
 	BRUSH_EDIT, 
 	BRUSH_EDITING,
 	BRUSH_PAINT,
+	BRUSH_PORTAL
 }
 
 var current_mode = BRUSH_OFF
@@ -204,6 +205,7 @@ func stop_resize():
 	set_mode(BRUSH_EDIT)
 
 onready var brick_template = preload("res://Aether/Construction/Brick.tscn")
+onready var portal_template = preload("res://Portal.tscn")
 
 func fire():
 
@@ -225,6 +227,8 @@ func fire():
 		stop_resize()
 	elif current_mode == BRUSH_PAINT:
 		paint_target()
+	elif current_mode == BRUSH_PORTAL:
+		paint_portal()
 	
 var active_skin = 0 # this could work like a block type
 
@@ -236,6 +240,14 @@ func paint_target():
 	if target:
 		print("painting %d" % active_skin)
 		target.set_skin(active_skin)
+
+func paint_portal():
+	var new_brick = portal_template.instance()
+	new_brick.translation = translation
+	new_brick.rotation = rotation
+	#new_brick.set_extents(extents)
+	get_tree().get_root().add_child(new_brick)
+	pass
 
 var rotation_snaps = 48
 func _input(event):
@@ -249,6 +261,8 @@ func _input(event):
 		set_mode(BRUSH_EDIT)
 	elif event.is_action_pressed("slot_5"):
 		set_mode(BRUSH_PAINT)
+	elif event.is_action_pressed("slot_6"):
+		set_mode(BRUSH_PORTAL)
 
 	if current_mode == BRUSH_PAINT:
 		if event.is_action_pressed("variant_next"):
