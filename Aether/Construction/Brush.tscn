@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Aether/Construction/Brush.gd" type="Script" id=1]
 [ext_resource path="res://Aether/Construction/M_Brush_Build.tres" type="Material" id=2]
@@ -6,15 +6,9 @@
 [ext_resource path="res://Aether/Construction/M_Brush_Edit.tres" type="Material" id=4]
 [ext_resource path="res://Aether/Construction/M_Brush_Editing.tres" type="Material" id=5]
 [ext_resource path="res://Aether/Construction/M_Brush_Paint.tres" type="Material" id=6]
+[ext_resource path="res://Aether/Widgets/resize_arrow_scene.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CubeMesh" id=1]
-
-[sub_resource type="CapsuleMesh" id=2]
-radius = 0.08
-mid_height = 0.44
-
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 1, 0.913725, 0, 1 )
 
 [node name="Brush" type="Spatial"]
 script = ExtResource( 1 )
@@ -29,7 +23,8 @@ transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="ResizeHandle" type="MeshInstance" parent="."]
+[node name="ResizeHandle" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13862, 0.940729 )
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+
+[node name="Scene Root2" parent="ResizeHandle" instance=ExtResource( 7 )]
+transform = Transform( -2.18557e-008, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-008, 0, 0, 0 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Aether/GameUI.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Aether/Construction/Brick.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ConveyorBelt.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Portal.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Aether/Widgets/resize_arrow.glb" type="PackedScene" id=9]
 
 [sub_resource type="PrismMesh" id=1]
 
@@ -171,3 +172,6 @@ transform = Transform( 0.0375262, 0, 0.999296, 0, 1, 0, -0.999296, 0, 0.0375262,
 
 [node name="Portal" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0707, 0 )
+
+[node name="Scene Root" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.641455, -4.36997, 0.609343 )

@@ -61,7 +61,6 @@ func fire():
 
 func jump():
 	last_velocity.y = jump_speed
-	print("jumping")
 
 export var speed = 3.0
 export var gravity = Vector3(0, -10, 0);

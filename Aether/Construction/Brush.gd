@@ -76,6 +76,8 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 
 	if current_mode == BRUSH_EDITING:
 		var resize_current_point = resize_plane.intersects_ray(from_position, direction)
+		print("%s " % resize_current_point)
+		
 		if resize_current_point == null:
 			return
 		var resize_delta = resize_current_point - last_hit_position
@@ -91,6 +93,11 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 		var final_extents = resize_previous_extents + resize_coords
 		set_extents(final_extents)
 		translation = resize_starting_point + transform.basis.xform(resize_coords * resize_axis)
+
+		var arrow_position = transform.xform_inv(resize_current_point)
+		arrow_position -= arrow_position.project(resize_axis)
+		arrow_position += resize_axis * extents
+		$ResizeHandle.translation = arrow_position
 
 		return
 
@@ -137,10 +144,9 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 		translation = hit_result.position
 
 var resize_margin = 0.4
-var resize_normal_axis
+var resize_normal_axis: Vector3
 var resize_axis: Vector3
 var resize_grab_point = Vector3()
-var resize_origin = Vector3()
 var resize_previous_extents: Vector3
 var resize_starting_point: Vector3
 
@@ -165,12 +171,15 @@ func setup_resize(hit_result):
 		resize_axis = Vector3()
 		resize_axis[second_axis] = sign(local_coordinates[second_axis])
 
-		resize_normal_axis = major_axis
+		resize_normal_axis = Vector3()
+		resize_normal_axis[major_axis] = sign(local_coordinates[major_axis])
 		resize_grab_point[major_axis] = sign(local_coordinates[major_axis]) * extents[major_axis]
 		resize_grab_point[second_axis] = sign(local_coordinates[second_axis]) * extents[second_axis]
 		resize_grab_point[minor_axis] = local_coordinates[minor_axis]
 
 		handle.translation = resize_grab_point
+		var resize_right = resize_axis.cross(resize_normal_axis)
+		handle.transform.basis = Basis(resize_right, resize_normal_axis, resize_axis)
 
 	else:
 		# not near to edge, hide handle
@@ -183,20 +192,17 @@ var resize_plane: Plane
 func start_resize():
 	if target == null:
 		return
-	resize_origin = -resize_axis * extents
+		
+	
 	current_mode = BRUSH_EDITING
 
-	var plane_normal = Vector3()
-	# local space
-	# TODO: resize_normal_axis can be null
-	plane_normal[resize_normal_axis] = 1
-	# world space
-	plane_normal = transform.basis.xform(plane_normal)
-	var plane_distance = last_hit_position.project(plane_normal)
+	var plane_normal = transform.basis.xform(resize_normal_axis)
+	var plane_distance = last_hit_position.dot(plane_normal)
 
-	resize_plane = Plane(plane_normal, plane_distance.length())
+	resize_plane = Plane(plane_normal, plane_distance )#.length())
 	resize_previous_extents = extents
 	resize_starting_point = translation
+	
 
 
 func stop_resize():
