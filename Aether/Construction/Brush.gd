@@ -2,17 +2,17 @@ extends Spatial
 
 class_name Brush
 
-enum {
-	BRUSH_OFF, 
-	BRUSH_BUILD, 
-	BRUSH_DESTROY, 
-	BRUSH_EDIT, 
+enum BrushMode {
+	BRUSH_OFF,
+	BRUSH_BUILD,
+	BRUSH_DESTROY,
+	BRUSH_EDIT,
 	BRUSH_EDITING,
 	BRUSH_PAINT,
 	BRUSH_PORTAL
 }
 
-var current_mode = BRUSH_OFF
+var current_mode = BrushMode.BRUSH_OFF
 
 export var build_mat: Material
 export var destroy_mat: Material
@@ -31,34 +31,37 @@ func set_target(in_target: Brick):
 	if (target):
 		extents = target.extents
 	else:
-		extents = Vector3(1,1,1)
+		# extents = Vector3(1,1,1)
 		$ResizeHandle.visible = false
 	set_extents(extents)
 
 func set_extents(in_extents: Vector3):
-	extents = in_extents
+	extents = in_extents.abs()
 	brush_mesh.scale = extents + Vector3(0.02, 0.02, 0.02)
 
 func _ready():
 	set_target(null)
+	set_mode(BrushMode.BRUSH_OFF)
 
 func set_mode(new_mode):
 	current_mode = new_mode
 
 	$ResizeHandle.visible = false
+	visible = (current_mode != BrushMode.BRUSH_OFF)
 
-	visible = (current_mode != BRUSH_OFF)
-	brush_mesh = $BrushMesh
-	if current_mode == BRUSH_BUILD:
-		brush_mesh.material_override = build_mat
-	elif current_mode == BRUSH_DESTROY:
-		brush_mesh.material_override = destroy_mat
-	elif current_mode == BRUSH_EDIT:
-		brush_mesh.material_override = edit_mat
-	elif current_mode == BRUSH_EDITING:
-		brush_mesh.material_override = editing_mat
-	elif current_mode == BRUSH_PAINT:
-		brush_mesh.material_override = paint_mat
+	$BrushUI.set_brush_mode(current_mode)
+
+	if current_mode == BrushMode.BRUSH_BUILD:
+		$BrushMesh.material_override = build_mat
+	elif current_mode == BrushMode.BRUSH_DESTROY:
+		$BrushMesh.material_override = destroy_mat
+	elif current_mode == BrushMode.BRUSH_EDIT:
+		$BrushMesh.material_override = edit_mat
+	elif current_mode == BrushMode.BRUSH_EDITING:
+		$BrushMesh.material_override = editing_mat
+	elif current_mode == BrushMode.BRUSH_PAINT:
+		$BrushMesh.material_override = paint_mat
+		$BrushUI.set_paint_id(active_skin)
 
 
 var extents = Vector3(1,1,1)
@@ -71,13 +74,12 @@ func snap_to_position_and_direction(in_position: Vector3, in_direction: Vector3)
 var last_hit_position
 func aim_brush(from_position: Vector3, direction: Vector3):
 
-	if current_mode == BRUSH_OFF:
+	if current_mode == BrushMode.BRUSH_OFF:
 		return
 
-	if current_mode == BRUSH_EDITING:
+	if current_mode == BrushMode.BRUSH_EDITING:
 		var resize_current_point = resize_plane.intersects_ray(from_position, direction)
-		print("%s " % resize_current_point)
-		
+
 		if resize_current_point == null:
 			return
 		var resize_delta = resize_current_point - last_hit_position
@@ -116,24 +118,25 @@ func aim_brush(from_position: Vector3, direction: Vector3):
 	if brick:
 		last_hit_position = hit_result.position
 
-		if current_mode == BRUSH_BUILD:
+		if current_mode == BrushMode.BRUSH_BUILD:
 			rotation = brick.rotation
 
 			var hit_position = hit_result.position
 			var next_brick_direction = brick.get_suggested_build_direction(hit_position)
 			var next_brick_position = brick.get_snapping_position(hit_position)
+
 			snap_to_position_and_direction(next_brick_position, next_brick_direction)
 
-		elif current_mode == BRUSH_DESTROY:
+		elif current_mode == BrushMode.BRUSH_DESTROY:
 			rotation = brick.rotation
 			translation = brick.translation
 			set_target(brick)
-		elif current_mode == BRUSH_EDIT:
+		elif current_mode == BrushMode.BRUSH_EDIT:
 			rotation = brick.rotation
 			translation = brick.translation
 			set_target(brick)
 			setup_resize(hit_result)
-		elif current_mode == BRUSH_PAINT:
+		elif current_mode == BrushMode.BRUSH_PAINT:
 			rotation = brick.rotation
 			translation = brick.translation
 			set_target(brick)
@@ -166,7 +169,7 @@ func setup_resize(hit_result):
 
 	var distance_from_margin = extents[second_axis] - abs(local_coordinates[second_axis])
 	if distance_from_margin < resize_margin:
-		# near to the edge, suggest resize
+		# near to the edge, suggest resize in WS edge direction
 		handle.visible = true
 		resize_axis = Vector3()
 		resize_axis[second_axis] = sign(local_coordinates[second_axis])
@@ -182,8 +185,17 @@ func setup_resize(hit_result):
 		handle.transform.basis = Basis(resize_right, resize_normal_axis, resize_axis)
 
 	else:
-		# not near to edge, hide handle
-		handle.visible = false
+		# not near to edge, resize in normal direction
+		handle.visible = true
+		resize_axis = Vector3()
+		resize_axis[major_axis] = sign(local_coordinates[major_axis])
+		resize_normal_axis = Vector3()
+		resize_normal_axis[second_axis] = sign(local_coordinates[second_axis])
+
+		handle.translation = local_coordinates
+		var resize_right = resize_axis.cross(resize_normal_axis)
+		handle.transform.basis = Basis(resize_right, resize_normal_axis, resize_axis)
+
 
 	return transform.basis.xform(suggested_direction)
 
@@ -192,9 +204,9 @@ var resize_plane: Plane
 func start_resize():
 	if target == null:
 		return
-		
-	
-	current_mode = BRUSH_EDITING
+
+
+	current_mode = BrushMode.BRUSH_EDITING
 
 	var plane_normal = transform.basis.xform(resize_normal_axis)
 	var plane_distance = last_hit_position.dot(plane_normal)
@@ -202,46 +214,51 @@ func start_resize():
 	resize_plane = Plane(plane_normal, plane_distance )#.length())
 	resize_previous_extents = extents
 	resize_starting_point = translation
-	
+
 
 
 func stop_resize():
 	target.set_extents(extents)
 	target.translation = translation
-	set_mode(BRUSH_EDIT)
+	set_mode(BrushMode.BRUSH_EDIT)
 
 onready var brick_template = preload("res://Aether/Construction/Brick.tscn")
 onready var portal_template = preload("res://Portal.tscn")
 
 func fire():
 
-	if current_mode == BRUSH_OFF:
+	if current_mode == BrushMode.BRUSH_OFF:
 		return
 
-	if current_mode == BRUSH_BUILD:
+	if current_mode == BrushMode.BRUSH_BUILD:
 		var new_brick = brick_template.instance()
 		new_brick.translation = translation
 		new_brick.rotation = rotation
 		new_brick.set_extents(extents)
 		get_tree().get_root().add_child(new_brick)
-	elif current_mode == BRUSH_DESTROY:
-		target.get_parent().remove_child(target)
+	elif current_mode == BrushMode.BRUSH_DESTROY:
+		if target:
+			target.get_parent().remove_child(target)
 		target = null
-	elif current_mode == BRUSH_EDIT:
+	elif current_mode == BrushMode.BRUSH_EDIT:
 		start_resize()
-	elif current_mode == BRUSH_EDITING:
+	elif current_mode == BrushMode.BRUSH_EDITING:
 		stop_resize()
-	elif current_mode == BRUSH_PAINT:
+	elif current_mode == BrushMode.BRUSH_PAINT:
 		paint_target()
-	elif current_mode == BRUSH_PORTAL:
+	elif current_mode == BrushMode.BRUSH_PORTAL:
 		paint_portal()
-	
+
+enum BrushSkin {
+	CLEAR,
+	WOOD,
+}
 var active_skin = 0 # this could work like a block type
 
 func set_active_skin(skin_id):
-	active_skin = clamp(skin_id, 0, 1)
-	print("painting %d" % active_skin)
-	
+	active_skin = clamp(skin_id, 0, 2)
+	$BrushUI.set_paint_id(active_skin)
+
 func paint_target():
 	if target:
 		print("painting %d" % active_skin)
@@ -258,19 +275,27 @@ func paint_portal():
 var rotation_snaps = 48
 func _input(event):
 	if event.is_action_pressed("slot_1"):
-		set_mode(BRUSH_OFF)
+		set_mode(BrushMode.BRUSH_OFF)
 	elif event.is_action_pressed("slot_2"):
-		set_mode(BRUSH_BUILD)
+		set_mode(BrushMode.BRUSH_BUILD)
 	elif event.is_action_pressed("slot_3"):
-		set_mode(BRUSH_DESTROY)
+		set_mode(BrushMode.BRUSH_DESTROY)
 	elif event.is_action_pressed("slot_4"):
-		set_mode(BRUSH_EDIT)
+		set_mode(BrushMode.BRUSH_EDIT)
 	elif event.is_action_pressed("slot_5"):
-		set_mode(BRUSH_PAINT)
+		set_mode(BrushMode.BRUSH_PAINT)
 	elif event.is_action_pressed("slot_6"):
-		set_mode(BRUSH_PORTAL)
+		set_mode(BrushMode.BRUSH_PORTAL)
+	elif event.is_action_pressed("preset_1"):
+		set_preset(0)
+	elif event.is_action_pressed("preset_2"):
+		set_preset(1)
+	elif event.is_action_pressed("preset_3"):
+		set_preset(2)
+	elif event.is_action_pressed("preset_4"):
+		set_preset(3)
 
-	if current_mode == BRUSH_PAINT:
+	if current_mode == BrushMode.BRUSH_PAINT:
 		if event.is_action_pressed("variant_next"):
 			set_active_skin(active_skin+1)
 		elif event.is_action_pressed("variant_previous"):
@@ -280,3 +305,9 @@ func _input(event):
 			spawn_rotation += (TAU/rotation_snaps)
 		elif event.is_action_pressed("variant_previous"):
 			spawn_rotation -= (TAU/rotation_snaps)
+
+
+export(Array, Vector3) var presets
+func set_preset(preset_idx):
+	var preset = presets[preset_idx]
+	set_extents(preset)

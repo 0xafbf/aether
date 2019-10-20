@@ -1,23 +1,14 @@
 
 extends KinematicBody
-
+class_name Character
 
 onready var brick_ghost_template = preload("res://Aether/Construction/Brush.tscn")
 var brush: Brush
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	get_brush()
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	if OS.get_name() != "HTML5":
+		set_mouse_lock(true)
 
 export var cam_speed = 0.003
 var pitch = 0
@@ -27,23 +18,34 @@ func _input(event):
 	if event.is_action_pressed("jump"):
 		jump()
 	elif event.is_action_pressed("fire"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		set_mouse_lock(true)
 		fire()
-	
+
 
 	elif event is InputEventMouseMotion:
-		var cam_angular_vel = event.relative * cam_speed
-		pitch = clamp(pitch - cam_angular_vel.y, -TAU/4, TAU/4)
-		yaw = yaw - cam_angular_vel.x
-
-		$CameraArm.rotation.x = pitch
-		$CameraArm.rotation.y = yaw
+		if is_mouse_locked:
+			var cam_angular_vel = event.relative * cam_speed
+			pitch = clamp(pitch - cam_angular_vel.y, -TAU/4, TAU/4)
+			yaw = yaw - cam_angular_vel.x
+	
+			$CameraArm.rotation.x = pitch
+			$CameraArm.rotation.y = yaw
 	elif event is InputEventKey:
 		var evt = event as InputEventKey
 		if evt.pressed && evt.scancode == KEY_F11:
 			OS.window_fullscreen = !OS.window_fullscreen
 		if evt.pressed && evt.scancode == KEY_ESCAPE:
-			get_tree().quit()
+			set_mouse_lock(!is_mouse_locked)
+
+var is_mouse_locked = false
+
+func set_mouse_lock(new_mouse_lock):
+	is_mouse_locked = new_mouse_lock
+	var input_mode = Input.MOUSE_MODE_VISIBLE
+	if is_mouse_locked:
+		input_mode = Input.MOUSE_MODE_CAPTURED		
+	Input.set_mouse_mode(input_mode)
+			
 
 func get_brush():
 	if !brush:

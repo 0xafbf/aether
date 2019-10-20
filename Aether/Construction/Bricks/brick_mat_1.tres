@@ -1,7 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
-[ext_resource path="res://Aether/Construction/Bricks/brick_shader.tres" type="Shader" id=1]
+[ext_resource path="res://Aether/Widgets/new_shader.shader" type="Shader" id=1]
+[ext_resource path="res://Aether/Construction/wood.png" type="Texture" id=2]
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/BaseColor = Color( 1, 1, 1, 1 )
+shader_param/box_size = Vector3( 0.5, 0.5, 0.5 )
+shader_param/base_color = ExtResource( 2 )

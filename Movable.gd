@@ -13,4 +13,4 @@ func _ready():
 #	pass
 
 func Move():
-	print("move portal")
+	pass #print("move portal")

@@ -18,7 +18,7 @@ func _ready():
 func move(forward:Vector3):
 	shouldMove = true
 	dir = forward
-	print("move")
+	
 
 func _physics_process(delta):
 	if(shouldMove):

@@ -26,3 +26,4 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 0.939772, 0.341802, 0, -0.341802, 0.939772, 0, 0.349321, 0 )
 
 [node name="Camera" type="Camera" parent="CameraArm"]
+fov = 90.0

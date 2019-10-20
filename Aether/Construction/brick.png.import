@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/wood.png-8f6cba2b61309f9587fae2148ae2854a.s3tc.stex"
-path.etc2="res://.import/wood.png-8f6cba2b61309f9587fae2148ae2854a.etc2.stex"
+path.s3tc="res://.import/brick.png-7729a5f3dacea3018875d15c4e8d9e64.s3tc.stex"
+path.etc2="res://.import/brick.png-7729a5f3dacea3018875d15c4e8d9e64.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Aether/Construction/wood.png"
-dest_files=[ "res://.import/wood.png-8f6cba2b61309f9587fae2148ae2854a.s3tc.stex", "res://.import/wood.png-8f6cba2b61309f9587fae2148ae2854a.etc2.stex" ]
+source_file="res://Aether/Construction/brick.png"
+dest_files=[ "res://.import/brick.png-7729a5f3dacea3018875d15c4e8d9e64.s3tc.stex", "res://.import/brick.png-7729a5f3dacea3018875d15c4e8d9e64.etc2.stex" ]
 
 [params]
 

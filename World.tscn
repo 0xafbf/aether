@@ -1,14 +1,15 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://character.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Aether/GameUI.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Aether/grid.tres" type="Material" id=3]
-[ext_resource path="res://MultiMesh.gd" type="Script" id=4]
-[ext_resource path="res://DebugDraw.gd" type="Script" id=5]
-[ext_resource path="res://Aether/Construction/Brick.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ConveyorBelt.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Portal.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Aether/Widgets/resize_arrow.glb" type="PackedScene" id=9]
+[ext_resource path="res://Aether/grid.tres" type="Material" id=2]
+[ext_resource path="res://MultiMesh.gd" type="Script" id=3]
+[ext_resource path="res://DebugDraw.gd" type="Script" id=4]
+[ext_resource path="res://ConveyorBelt.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Portal.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Aether/Widgets/resize_arrow.glb" type="PackedScene" id=7]
+[ext_resource path="res://Aether/Construction/Brick.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Aether/Construction/Bricks/brick_mat_0.tres" type="Material" id=9]
+[ext_resource path="res://Aether/Construction/Bricks/brick_mat_1.tres" type="Material" id=10]
 
 [sub_resource type="PrismMesh" id=1]
 
@@ -104,10 +105,7 @@ material/0 = SubResource( 4 )
 transform = Transform( 0.696481, 0.533257, -0.480158, 0, 0.669139, 0.743137, 0.717576, -0.517581, 0.466042, 0.127564, 6.81618, 0 )
 shadow_enabled = true
 
-[node name="Control" parent="." instance=ExtResource( 2 )]
-
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81746, 0, -0.987652 )
 use_collision = true
 
@@ -116,62 +114,59 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05556, 0.987652 )
 width = 38.9814
 height = 2.03807
 depth = 35.035
-material = ExtResource( 3 )
+material = ExtResource( 2 )
 
 [node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60477, 1.81941, 6.50996 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60477, 0.884868, 6.50996 )
 width = 2.66832
 height = 4.92743
 depth = 6.09823
-material = ExtResource( 3 )
+material = ExtResource( 2 )
 
 [node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0954, 1.81941, -4.35343 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.27499, 1.5704, -4.99908 )
 width = 2.66832
 height = 4.92743
 depth = 6.09823
-material = ExtResource( 3 )
+material = ExtResource( 2 )
 
 [node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
 transform = Transform( 1, 0, 0, 0, 0.773949, 0.633248, 0, -0.633248, 0.773949, -3.51215, -0.66592, 12.8399 )
 width = 3.10622
 height = 7.7491
 depth = 8.17634
-material = ExtResource( 3 )
+material = ExtResource( 2 )
 
 [node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.46492, 0 )
 multimesh = SubResource( 6 )
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
-[node name="BRICK4" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.653866, 0, 0.756611, 0, 1, 0, -0.756611, 0, -0.653866, 9.0674, 2.06096, 5.02053 )
-extents = Vector3( 1.5, 0.5, 3 )
+[node name="ConveyorBelt" parent="." instance=ExtResource( 5 )]
 
-[node name="BRICK5" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.78142, 0.612719, 9.15637 )
-extents = Vector3( 2, 0.5, 2 )
-skin = 1
-
-[node name="ConveyorBelt" parent="." instance=ExtResource( 7 )]
-
-[node name="ConveyorBelt2" parent="." instance=ExtResource( 7 )]
+[node name="ConveyorBelt2" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.83439 )
 
-[node name="ConveyorBelt3" parent="." instance=ExtResource( 7 )]
+[node name="ConveyorBelt3" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.77287 )
 
-[node name="ConveyorBelt4" parent="." instance=ExtResource( 7 )]
+[node name="ConveyorBelt4" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.49958 )
 
-[node name="ConveyorBelt5" parent="." instance=ExtResource( 7 )]
+[node name="ConveyorBelt5" parent="." instance=ExtResource( 5 )]
 transform = Transform( 0.0375262, 0, 0.999296, 0, 1, 0, -0.999296, 0, 0.0375262, 0, 0, -7.45088 )
 
-[node name="Portal" parent="." instance=ExtResource( 8 )]
+[node name="Portal" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0707, 0 )
 
-[node name="Scene Root" parent="." instance=ExtResource( 9 )]
+[node name="Scene Root" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.641455, -4.36997, 0.609343 )
+
+[node name="BRICK" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69795, 1.49016, 8.39047 )
+extents = Vector3( 3, 0.5, 1.5 )
+skin = 1
+skin_materials = [ ExtResource( 9 ), ExtResource( 10 ), null ]
