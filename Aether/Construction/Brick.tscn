@@ -14,7 +14,9 @@ shader_param/base_color = ExtResource( 6 )
 
 [sub_resource type="CubeMesh" id=2]
 
-[node name="BRICK" type="Spatial"]
+[node name="BRICK" type="Spatial" groups=[
+"Blocks",
+]]
 script = ExtResource( 1 )
 extents = Vector3( 0.5, 0.5, 0.5 )
 skin_materials = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]

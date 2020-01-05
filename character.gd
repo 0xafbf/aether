@@ -7,45 +7,25 @@ var brush: Brush
 
 func _ready():
 	get_brush()
-	if OS.get_name() != "HTML5":
-		set_mouse_lock(true)
 
 export var cam_speed = 0.003
 var pitch = 0
 var yaw = 0
 
-func _input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("jump"):
 		jump()
 	elif event.is_action_pressed("fire"):
-		set_mouse_lock(true)
 		fire()
 
 
 	elif event is InputEventMouseMotion:
-		if is_mouse_locked:
-			var cam_angular_vel = event.relative * cam_speed
-			pitch = clamp(pitch - cam_angular_vel.y, -TAU/4, TAU/4)
-			yaw = yaw - cam_angular_vel.x
-	
-			$CameraArm.rotation.x = pitch
-			$CameraArm.rotation.y = yaw
-	elif event is InputEventKey:
-		var evt = event as InputEventKey
-		if evt.pressed && evt.scancode == KEY_F11:
-			OS.window_fullscreen = !OS.window_fullscreen
-		if evt.pressed && evt.scancode == KEY_ESCAPE:
-			set_mouse_lock(!is_mouse_locked)
+		var cam_angular_vel = event.relative * cam_speed
+		pitch = clamp(pitch - cam_angular_vel.y, -TAU/4, TAU/4)
+		yaw = yaw - cam_angular_vel.x
 
-var is_mouse_locked = false
-
-func set_mouse_lock(new_mouse_lock):
-	is_mouse_locked = new_mouse_lock
-	var input_mode = Input.MOUSE_MODE_VISIBLE
-	if is_mouse_locked:
-		input_mode = Input.MOUSE_MODE_CAPTURED		
-	Input.set_mouse_mode(input_mode)
-			
+		$CameraArm.rotation.x = pitch
+		$CameraArm.rotation.y = yaw
 
 func get_brush():
 	if !brush:

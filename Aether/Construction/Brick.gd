@@ -12,7 +12,6 @@ var owned_material_id = -1
 onready var owned_material:Material = null
 func get_owned_material(desired_id):
 
-	print("getting mat:%s" % desired_id)
 	if desired_id == owned_material_id:
 		if owned_material:
 			return owned_material
@@ -24,7 +23,6 @@ func get_owned_material(desired_id):
 		$BrickCollision/MeshInstance.material_override = owned_material
 	else:
 		owned_material = null
-	print(owned_material)
 	return owned_material
 
 func set_extents(in_extents):
@@ -34,7 +32,6 @@ func set_extents(in_extents):
 	extents.z = max(int(in_extents.z), 1)
 
 	extents = extents * snap_size
-	print(brick_mesh)
 	if brick_mesh:
 		brick_mesh.scale = extents
 
@@ -63,7 +60,6 @@ func update_collision():
 
 
 func _ready():
-	print("calling ready")
 	set_extents(extents)
 
 func get_suggested_build_direction(world_position):
@@ -123,3 +119,18 @@ func set_skin(skin_id):
 			get_owned_material(skin)
 			set_extents(extents)
 			#$BrickCollision/MeshInstance.material_override = skin_materials[skin]
+
+func serialized():
+	var r = Dictionary()
+	r["location"] = var2str(translation)
+	r["rotation"] = var2str(rotation)
+	r["extents"] = var2str(extents)
+	r["brick_type"] = skin
+	return r
+
+func deserialize(input: Dictionary):
+	translation = str2var(input["location"])
+	rotation = str2var(input["rotation"])
+	var new_extents = str2var(input["extents"])
+	set_extents(new_extents)
+	set_skin(input["brick_type"])

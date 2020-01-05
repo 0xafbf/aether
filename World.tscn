@@ -33,7 +33,6 @@ mesh = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98587, 3.02774, 4.64149 )
 
 [node name="VehicleBody" type="VehicleBody" parent="."]
-editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.51607, 0.139472, -5.60917 )
 mass = 400.0
 engine_force = 10.0
@@ -50,6 +49,7 @@ material/0 = null
 
 [node name="VehicleWheel" type="VehicleWheel" parent="VehicleBody"]
 transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, 0.672191, 0.0607215, 0.728024 )
+engine_force = 2.40742e-35
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.1
@@ -57,12 +57,13 @@ suspension_travel = 0.1
 suspension_stiffness = 10.0
 
 [node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel"]
-transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( -8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="VehicleWheel3" type="VehicleWheel" parent="VehicleBody"]
 transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, 0.672191, 0.0607215, -0.69191 )
+engine_force = 3.12257e-39
 use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.1
@@ -70,29 +71,31 @@ suspension_travel = 0.1
 suspension_stiffness = 10.0
 
 [node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel3"]
-transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( -8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="VehicleWheel2" type="VehicleWheel" parent="VehicleBody"]
 transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, -0.903142, 0.0607215, 0.728024 )
+engine_force = 2.40742e-35
 wheel_radius = 0.1
 suspension_travel = 0.1
 suspension_stiffness = 10.0
 
 [node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel2"]
-transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( -8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="VehicleWheel4" type="VehicleWheel" parent="VehicleBody"]
 transform = Transform( -0.0254994, 0, 0.999675, 0, 1, 0, -0.999675, 0, -0.0254994, -0.903142, 0.0607215, -0.69191 )
+engine_force = 9.09183e-39
 wheel_radius = 0.1
 suspension_travel = 0.1
 suspension_stiffness = 10.0
 
 [node name="MeshInstance" type="MeshInstance" parent="VehicleBody/VehicleWheel4"]
-transform = Transform( -8.74228e-009, -0.2, 0, 0.2, -8.74228e-009, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( -8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, 0, 0, 0.2, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -168,5 +171,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.641455, -4.36997, 0.609343 
 [node name="BRICK" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.69795, 1.49016, 8.39047 )
 extents = Vector3( 3, 0.5, 1.5 )
-skin = 1
 skin_materials = [ ExtResource( 9 ), ExtResource( 10 ), null ]

@@ -93,7 +93,7 @@ void fragment() {
 	float n_out11p0;
 	n_out11p0 = n_out9p0 * n_out9p0;
 
-// ScalarInterp:12
+// ScalarMix:12
 	float n_in12p0 = 0.10000;
 	float n_in12p1 = 0.20000;
 	float n_out12p0;

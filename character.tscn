@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://character.gd" type="Script" id=1]
+[ext_resource path="res://Aether/UI/PlayerUI.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.232452
@@ -27,3 +28,5 @@ transform = Transform( 1, 0, 0, 0, 0.939772, 0.341802, 0, -0.341802, 0.939772, 0
 
 [node name="Camera" type="Camera" parent="CameraArm"]
 fov = 90.0
+
+[node name="PlayerUI" parent="." instance=ExtResource( 2 )]
