@@ -1,0 +1,208 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/player/graphics/fontdata.tres" type="DynamicFontData" id=1]
+[ext_resource path="res://src/GameUI.gd" type="Script" id=2]
+[ext_resource path="res://assets/tools/tool_edit.png" type="Texture" id=4]
+[ext_resource path="res://assets/tools/tool_delete.png" type="Texture" id=5]
+[ext_resource path="res://assets/tools/tool_paint.png" type="Texture" id=6]
+[ext_resource path="res://assets/tools/tool_none.png" type="Texture" id=7]
+[ext_resource path="res://assets/tools/export_add.png" type="Texture" id=8]
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 45
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 1 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+active_color = Color( 1, 1, 1, 1 )
+inactive_color = Color( 1, 1, 1, 0.2 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 23.0
+margin_top = -95.0
+margin_right = 449.0
+margin_bottom = -12.0
+color = Color( 0, 0, 0, 0.5 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="IconToolNone" type="TextureRect" parent="ColorRect2/HBoxContainer"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="ColorRect2/HBoxContainer/IconToolNone"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -46.1903
+margin_top = -19.3932
+margin_right = 33.8097
+margin_bottom = 43.6068
+custom_fonts/font = SubResource( 1 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IconToolAdd" type="TextureRect" parent="ColorRect2/HBoxContainer"]
+margin_left = 84.0
+margin_right = 164.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 1
+
+[node name="Label2" type="Label" parent="ColorRect2/HBoxContainer/IconToolAdd"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -47.3957
+margin_top = -19.3932
+margin_right = 32.6043
+margin_bottom = 43.6068
+custom_fonts/font = SubResource( 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IconToolDelete" type="TextureRect" parent="ColorRect2/HBoxContainer"]
+margin_left = 168.0
+margin_right = 248.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1
+
+[node name="Label3" type="Label" parent="ColorRect2/HBoxContainer/IconToolDelete"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.7323
+margin_top = -18.6194
+margin_right = 35.2677
+margin_bottom = 44.3806
+custom_fonts/font = SubResource( 1 )
+text = "3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IconToolEdit" type="TextureRect" parent="ColorRect2/HBoxContainer"]
+margin_left = 252.0
+margin_right = 332.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 1
+
+[node name="Label4" type="Label" parent="ColorRect2/HBoxContainer/IconToolEdit"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.1639
+margin_top = -16.2982
+margin_right = 34.8361
+margin_bottom = 46.7018
+custom_fonts/font = SubResource( 1 )
+text = "4"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IconToolPaint" type="TextureRect" parent="ColorRect2/HBoxContainer"]
+margin_left = 336.0
+margin_right = 416.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="Label4" type="Label" parent="ColorRect2/HBoxContainer/IconToolPaint"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.1639
+margin_top = -16.2982
+margin_right = 34.8361
+margin_bottom = 46.7018
+custom_fonts/font = SubResource( 1 )
+text = "5
+"
+align = 1
+valign = 1
+
+[node name="PaintInfo" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -241.579
+margin_top = -97.3684
+margin_right = -31.579
+margin_bottom = -27.3684
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="PaintInfo"]
+margin_left = 32.6316
+margin_top = 10.5263
+margin_right = 168.632
+margin_bottom = 61.5263
+custom_fonts/font = SubResource( 2 )
+text = "Color ID: 5"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.5
+margin_top = -6.0
+margin_right = 4.5
+margin_bottom = 6.0
+mouse_filter = 2

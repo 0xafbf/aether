@@ -1,6 +1,0 @@
-[gd_resource type="SpatialMaterial" format=2]
-
-[resource]
-flags_transparent = true
-params_cull_mode = 2
-albedo_color = Color( 0.49, 1, 0.67, 0.2 )

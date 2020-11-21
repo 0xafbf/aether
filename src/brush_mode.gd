@@ -1,0 +1,11 @@
+
+class_name BrushMode
+
+enum {
+	BRUSH_OFF,
+	BRUSH_BUILD,
+	BRUSH_DESTROY,
+	BRUSH_EDIT,
+	BRUSH_EDITING,
+	BRUSH_PAINT,
+}

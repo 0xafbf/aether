@@ -1,0 +1,35 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/player/GameUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/player/graphics/resize_arrow_scene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Brush.gd" type="Script" id=3]
+[ext_resource path="res://assets/player/graphics/M_Brush_Build.tres" type="Material" id=4]
+[ext_resource path="res://assets/player/graphics/M_Brush_Editing.tres" type="Material" id=5]
+[ext_resource path="res://assets/player/graphics/M_Brush_Paint.tres" type="Material" id=6]
+[ext_resource path="res://assets/player/graphics/M_Brush_Edit.tres" type="Material" id=7]
+[ext_resource path="res://assets/player/graphics/M_Brush_Destroy.tres" type="Material" id=8]
+
+
+[sub_resource type="CubeMesh" id=1]
+
+[node name="Brush" type="Spatial"]
+script = ExtResource( 3 )
+build_mat = ExtResource( 4 )
+destroy_mat = ExtResource( 8 )
+edit_mat = ExtResource( 7 )
+editing_mat = ExtResource( 5 )
+paint_mat = ExtResource( 6 )
+presets = [ Vector3( 0.5, 2, 0.5 ), Vector3( 2, 0.5, 2 ), Vector3( 2, 0.5, 0.5 ), Vector3( 0.5, 0.5, 2 ) ]
+
+[node name="BrushMesh" type="MeshInstance" parent="."]
+transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="ResizeHandle" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13862, 0.940729 )
+
+[node name="Scene Root2" parent="ResizeHandle" instance=ExtResource( 2 )]
+transform = Transform( -2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 0, 0, 0 )
+
+[node name="BrushUI" parent="." instance=ExtResource( 1 )]

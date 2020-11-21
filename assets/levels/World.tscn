@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/player/character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/player/graphics/grid.tres" type="Material" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="VisualShader" id=2]
+graph_offset = Vector2( -291, 97 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+
+[node name="World" type="Spatial"]
+
+[node name="Character" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98587, 3.02774, 4.64149 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.696481, 0.533257, -0.480158, 0, 0.669139, 0.743137, 0.717576, -0.517581, 0.466042, 0.127564, 6.81618, 0 )
+shadow_enabled = true
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81746, 0, -0.987652 )
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05556, 0.987652 )
+width = 38.9814
+height = 2.03807
+depth = 35.035
+material = ExtResource( 2 )
+
+[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.60477, 0.884868, 6.50996 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
+material = ExtResource( 2 )
+
+[node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.27499, 1.5704, -4.99908 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
+material = ExtResource( 2 )
+
+[node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 0.773949, 0.633248, 0, -0.633248, 0.773949, -3.51215, -0.66592, 12.8399 )
+width = 3.10622
+height = 7.7491
+depth = 8.17634
+material = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77327, 3.06345, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )

@@ -1,0 +1,42 @@
+extends Node
+
+onready var imgui = VisualDebugger.imgui
+
+var state = true
+var count = 0
+
+var teams = []
+
+func _process_old(_delta): 
+	
+	imgui.begin("teams")
+	
+	var num_teams = len(teams)
+	imgui.text("TEAMS: %d" % num_teams)
+	if imgui.button("Add team"):
+		teams.append({
+			"score":0
+		})
+	if imgui.button("Add 10 teams"):
+		for idx in range(10):
+			teams.append({
+				"score":0
+			})
+	
+	var deleted_idx = -1
+	for idx in len(teams):
+		var team = teams[idx]
+		imgui.text("team:%d score:%d" % [idx, team.score])
+		imgui.same_line()
+		if imgui.button("+"):
+			team.score += 1
+		imgui.same_line()
+		if imgui.button("-"):
+			team.score -= 1
+		imgui.same_line()
+		if imgui.button("x"):
+			deleted_idx = idx
+	if deleted_idx != -1:
+		teams.remove(deleted_idx)
+		
+	imgui.end()

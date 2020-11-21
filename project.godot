@@ -12,47 +12,60 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Brick",
 "language": "GDScript",
-"path": "res://Aether/Construction/Brick.gd"
+"path": "res://src/Brick.gd"
 }, {
 "base": "Spatial",
 "class": "Brush",
 "language": "GDScript",
-"path": "res://Aether/Construction/Brush.gd"
+"path": "res://src/Brush.gd"
+}, {
+"base": "Reference",
+"class": "BrushMode",
+"language": "GDScript",
+"path": "res://src/brush_mode.gd"
 }, {
 "base": "KinematicBody",
 "class": "Character",
 "language": "GDScript",
-"path": "res://character.gd"
-}, {
-"base": "Area",
-"class": "Mover",
-"language": "GDScript",
-"path": "res://Mover.gd"
+"path": "res://src/character.gd"
 }, {
 "base": "Control",
-"class": "UIBrushSlot",
+"class": "ImGui",
 "language": "GDScript",
-"path": "res://Aether/UIBrushSlot.gd"
+"path": "res://addons/ab_framework/imgui.gd"
+}, {
+"base": "Resource",
+"class": "MyData",
+"language": "GDScript",
+"path": "res://addons/stuff/MyData.gd"
 } ]
 _global_script_class_icons={
 "Brick": "",
 "Brush": "",
+"BrushMode": "",
 "Character": "",
-"Mover": "",
-"UIBrushSlot": ""
+"ImGui": "",
+"MyData": ""
 }
 
 [application]
 
 config/name="aether"
-run/main_scene="res://World.tscn"
+run/main_scene="res://assets/levels/World.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+VisualDebugger="*res://addons/ab_framework/visual_debugger.tscn"
 
 [display]
 
-window/size/width=1600
-window/size/height=900
-window/size/borderless=true
+window/size/width=1280
+window/size/height=720
+
+[editor_plugins]
+
+enabled=PoolStringArray( "godot-plugin-refresher", "stuff" )
 
 [input]
 
@@ -144,6 +157,16 @@ preset_3={
 preset_4={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777247,"unicode":0,"echo":false,"script":null)
+ ]
+}
+aim_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+ ]
+}
+aim_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
  ]
 }
 

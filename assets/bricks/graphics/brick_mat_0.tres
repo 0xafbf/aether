@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://assets/player/graphics/new_shader.shader" type="Shader" id=1]
+[ext_resource path="res://assets/bricks/graphics/check.png" type="Texture" id=2]
+
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/box_size = Vector3( 0.5, 0.5, 0.5 )
+shader_param/base_color = ExtResource( 2 )

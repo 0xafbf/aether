@@ -1,0 +1,72 @@
+[gd_resource type="VisualShader" load_steps=14 format=2]
+
+[ext_resource path="res://assets/bricks/graphics/wood.png" type="Texture" id=1]
+
+
+
+[sub_resource type="VisualShaderNodeInput" id=7]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeDotProduct" id=8]
+
+[sub_resource type="VisualShaderNodeVectorOp" id=9]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 1, 1, 1 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeColorUniform" id=1]
+uniform_name = "BaseColor"
+
+[sub_resource type="VisualShaderNodeTexture" id=2]
+texture = ExtResource( 1 )
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeVectorOp" id=3]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+output_port_for_preview = 0
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorInterp" id=5]
+
+[sub_resource type="VisualShaderNodeVec3Uniform" id=6]
+uniform_name = "BoxSize"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=10]
+output_port_for_preview = 0
+operator = 3
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=11]
+constant = 1.0
+
+[sub_resource type="VisualShaderNodeInput" id=12]
+input_name = "normal"
+
+[resource]
+graph_offset = Vector2( -833.163, 144.75 )
+nodes/vertex/0/position = Vector2( 380, 180 )
+nodes/vertex/2/node = SubResource( 12 )
+nodes/vertex/2/position = Vector2( -180, 240 )
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( -120, 160 )
+nodes/fragment/3/node = SubResource( 2 )
+nodes/fragment/3/position = Vector2( -140, 300 )
+nodes/fragment/4/node = SubResource( 3 )
+nodes/fragment/4/position = Vector2( 120, 180 )
+nodes/fragment/5/node = SubResource( 4 )
+nodes/fragment/5/position = Vector2( -840, 300 )
+nodes/fragment/6/node = SubResource( 5 )
+nodes/fragment/6/position = Vector2( -200, 560 )
+nodes/fragment/7/node = SubResource( 6 )
+nodes/fragment/7/position = Vector2( -920, 600 )
+nodes/fragment/8/node = SubResource( 10 )
+nodes/fragment/8/position = Vector2( -740, 700 )
+nodes/fragment/9/node = SubResource( 11 )
+nodes/fragment/9/position = Vector2( -980, 740 )
+nodes/fragment/10/node = SubResource( 7 )
+nodes/fragment/10/position = Vector2( -900, 520 )
+nodes/fragment/11/node = SubResource( 8 )
+nodes/fragment/11/position = Vector2( -560, 520 )
+nodes/fragment/12/node = SubResource( 9 )
+nodes/fragment/12/position = Vector2( -380, 340 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 4, 0, 3, 0, 4, 1, 9, 0, 8, 0, 7, 0, 8, 1, 12, 0, 3, 0, 11, 0, 12, 1, 7, 0, 11, 1 )
