@@ -18,7 +18,6 @@ func set_dirty(in_dirty: bool):
 func get_dirty():
 	return dirty
 
-
 onready var button_normal = theme.get_stylebox("normal", "Button")
 onready var button_hover = theme.get_stylebox("hover", "Button")
 onready var button_pressed = theme.get_stylebox("pressed", "Button")
@@ -242,22 +241,28 @@ func input_text(id:String, label: String) -> String:
 				
 				input_text_caret_time = 0
 				return_string.erase(input_text_cursor -1 , 1)
+				dirty = true
 				
 		if input_delete:
 			if input_text_cursor < len(label):
 				
 				input_text_caret_time = 0
 				return_string.erase(input_text_cursor, 1)
+				dirty = true
 		if input_unicode != 0:
 			return_string = return_string.substr(0, input_text_cursor) + char(input_unicode) + return_string.substr(input_text_cursor, -1)
 			input_text_cursor += 1
 			
 			input_text_caret_time = 0
+			dirty = true
 		if input_enter:
 			focus_path = ""
+			dirty = true
 		if input_escape:
 			focus_path = ""
 			return_string = input_text_before_modify
+			dirty = true
+			
 			
 		
 		
@@ -299,7 +304,11 @@ func input_text(id:String, label: String) -> String:
 
 
 func _draw():
-	var ascent = font.get_ascent()
+	var ascent = 12
+	if font == null:
+		font = get_font("")
+	if font:
+		font.get_ascent()
 	for list_id in lists:
 		var list = lists[list_id]
 		if not list.has_draw_data:

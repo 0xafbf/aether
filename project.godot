@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "MyData",
 "language": "GDScript",
 "path": "res://addons/stuff/MyData.gd"
+}, {
+"base": "Resource",
+"class": "Note",
+"language": "GDScript",
+"path": "res://data/notes.gd"
 } ]
 _global_script_class_icons={
 "Brick": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "BrushMode": "",
 "Character": "",
 "ImGui": "",
-"MyData": ""
+"MyData": "",
+"Note": ""
 }
 
 [application]
