@@ -3,7 +3,6 @@ tool
 class_name ImGui
 
 var mouse: Vector2
-var draw_cursor: Vector2
 var sameline_cursor: Vector2
 var nextline_cursor: Vector2
 var sameline: bool
@@ -18,6 +17,17 @@ func set_dirty(in_dirty: bool):
 func get_dirty():
 	return dirty
 
+export var imgui_theme: Theme = preload("res://addons/ab_framework/gui_theme.tres")
+
+
+var loaded = false
+func load_imgui_theme():
+	if not loaded:
+		print("load theme")
+		button_normal = imgui_theme.get_stylebox("normal", "Button")
+		button_hover = imgui_theme.get_stylebox("hover", "Button")
+		loaded = true
+
 onready var button_normal = theme.get_stylebox("normal", "Button")
 onready var button_hover = theme.get_stylebox("hover", "Button")
 onready var button_pressed = theme.get_stylebox("pressed", "Button")
@@ -27,12 +37,16 @@ onready var input_focus = theme.get_stylebox("focus", "LineEdit")
 var input_width = 200
 
 
-onready var style_window = theme.get_stylebox("panel", "WindowDialog")
-onready var font = get_font("")
+onready var style_window = theme.get_stylebox("panel", "WindowDialog") setget ,get_style_window
+func get_style_window():
+	if style_window == null:
+		style_window = theme.get_stylebox("panel", "WindowDialog")
+	return style_window
+
+onready var font = imgui_theme.default_font
 
 var delta_time: float = 0
 
-var draw_list = []
 var mouse_buttons: int
 enum {
 	Draw_Type_Stylebox,
@@ -47,8 +61,6 @@ func mouse_released(idx: int):
 	return 1<<idx & prev_buttons & ~mouse_buttons
 
 var state = true
-func _ready():
-	lists = {}
 	
 var input_right: bool
 var input_left: bool
@@ -76,6 +88,8 @@ func _input(event):
 				input_escape = true
 				
 			input_unicode = key_event.unicode
+			get_tree().set_input_as_handled()
+			
 
 func _process(delta):
 	
@@ -99,66 +113,66 @@ func reset_draw_lists():
 		
 	
 	input_unicode = 0
-	for list_idx in lists:
-		reset_window(lists[list_idx])
-	
-var lists: Dictionary = {}
+	for ctx_idx in contexts:
+		reset_window(contexts[ctx_idx])
 
-var current_window: Dictionary
-var current_window_name: String
+
 var window_start_position = Vector2(10,40)
 
-func reset_window(window: Dictionary):
+func reset_window(window: GuiContext):
 	window.has_draw_data = false
 	window.draw_list.clear()
 	window.draw_cursor = Vector2()
 
-func begin(label: String):
-	current_window_name = label
-	if label in lists:
-		current_window = lists[label]
-		draw_list = current_window.draw_list
-		draw_cursor = current_window.draw_cursor
-	else:
-		draw_list = []
-		
-		draw_cursor = Vector2(
-			style_window.content_margin_left, 
-			style_window.content_margin_top 
-			
-		)	
-		current_window = {
-			"name": label,
-			"position": window_start_position,
-			"draw_list": draw_list,
-			"draw_cursor": draw_cursor,
-			"width": 0,
-			"max_x": 0,
-			"height": 0,
-		}
-		lists[label] = current_window
-	current_window.has_draw_data = true
+class GuiContext:
+	var name: String
+	var width: int
+	var draw_list: Array
+	var draw_cursor: Vector2
+	var has_draw_data: bool
+	var position: Vector2
 
+var default_context: GuiContext
+var ctx: GuiContext
+var contexts: Dictionary = {}
+
+func get_context(name: String):
+	if not name:
+		if not default_context:
+			default_context = GuiContext.new()
+		return default_context
+	else:
+		var named_ctx = contexts.get(name)
+		if named_ctx == null:
+			named_ctx = GuiContext.new()
+			contexts[name] = named_ctx
+		return named_ctx
+		
+
+func begin(label: String = ""):
+	ctx = get_context(label)
+	if not ctx.has_draw_data:
+		ctx.has_draw_data = true
+		var w = get_style_window()
+		ctx.draw_cursor = Vector2(w.content_margin_left, w.content_margin_top)
+		
 func end():
-	var window = current_window
-	window.height = draw_cursor.y
-	window.draw_cursor = draw_cursor
+	pass
 	
 func same_line(pos_x: int = -1):
 	sameline = true
-	nextline_cursor = draw_cursor
-	draw_cursor = sameline_cursor
+	nextline_cursor = ctx.draw_cursor
+	ctx.draw_cursor = sameline_cursor
 	if pos_x != -1:
-		draw_cursor.x = pos_x
+		ctx.draw_cursor.x = pos_x
 
 func button(label: String) -> bool:
-	
 	var string_size = font.get_string_size(label)
 	var top_left_pad = Vector2(button_normal.content_margin_left, button_normal.content_margin_top)
 	var bot_right_pad = Vector2(button_normal.content_margin_right, button_normal.content_margin_bottom)
 	
 	var button_size = string_size + top_left_pad + bot_right_pad
-	var button_position = draw_cursor + current_window.position
+	var button_position = ctx.draw_cursor + ctx.position
 	var rect = Rect2(button_position, button_size)
 	var text_position = button_position + top_left_pad
 	var mouse_local = mouse - rect_global_position
@@ -175,8 +189,8 @@ func button(label: String) -> bool:
 		if 1 & mouse_buttons:
 			button_color = button_pressed
 	
-	draw_list.append([Draw_Type_Stylebox, button_color, rect])	
-	draw_list.append([Draw_Type_Text, text_position, label])
+	ctx.draw_list.append([Draw_Type_Stylebox, button_color, rect])	
+	ctx.draw_list.append([Draw_Type_Text, text_position, label])
 	
 	move_cursor(button_size.y + theme.get_constant("line_separation", "ItemList"), button_size.x + 4)
 	dirty = dirty or pressed
@@ -185,16 +199,16 @@ func button(label: String) -> bool:
 func move_cursor(downward: int, sideways: int):
 	if sameline:
 		sameline = false
-		draw_cursor = nextline_cursor
+		ctx.draw_cursor = nextline_cursor
 	else:
-		sameline_cursor = draw_cursor
-		draw_cursor.y += downward
+		sameline_cursor = ctx.draw_cursor
+		ctx.draw_cursor.y += downward
 		
 	sameline_cursor.x += sideways
-	current_window.max_x = max(current_window.max_x, sameline_cursor.x)
+	# current_window.max_x = max(current_window.max_x, sameline_cursor.x)
 	
 func text(in_string: String):
-	draw_list.append([Draw_Type_Text, draw_cursor + current_window.position, in_string])
+	ctx.draw_list.append([Draw_Type_Text, ctx.draw_cursor + ctx.position, in_string])
 	var string_size = font.get_string_size(in_string)
 	move_cursor(string_size.y + theme.get_constant("line_separation", "ItemList"), string_size.x)
 
@@ -206,7 +220,8 @@ var input_text_caret_time: float
 
 func input_text(id:String, label: String) -> String:
 	var return_string = label
-	var my_focus_path = PoolStringArray([current_window.name, id]).join("/")
+	# @FocusPath
+	var my_focus_path = PoolStringArray([ctx.name, id]).join("/")
 	
 	var focused = focus_path == my_focus_path
 	
@@ -215,7 +230,7 @@ func input_text(id:String, label: String) -> String:
 	var bot_right_pad = Vector2(button_normal.content_margin_right, button_normal.content_margin_bottom)
 	
 	var button_size = Vector2(input_width, string_size.y) + top_left_pad + bot_right_pad
-	var button_position = draw_cursor + current_window.position
+	var button_position = ctx.draw_cursor + ctx.position
 	var rect = Rect2(button_position, button_size)
 	var text_position = button_position + top_left_pad
 	var mouse_local = mouse - rect_global_position
@@ -286,42 +301,28 @@ func input_text(id:String, label: String) -> String:
 				count_from_start += 1
 			input_text_cursor = count_from_start
 	
-	draw_list.append([Draw_Type_Stylebox, button_color, rect])	
+	ctx.draw_list.append([Draw_Type_Stylebox, button_color, rect])	
 	if focused and input_text_caret_time < 0.5:
 		var substring = label.substr(0, input_text_cursor)
 		var size = font.get_string_size(substring)
 		var start = text_position + Vector2(size.x, 0)
 		var end = text_position + Vector2(size.x, font.get_ascent())
-		draw_list.append([Draw_Type_Line, start, end, Color.white])	
+		ctx.draw_list.append([Draw_Type_Line, start, end, Color.white])	
 		
-	draw_list.append([Draw_Type_Text, text_position, label])
+	ctx.draw_list.append([Draw_Type_Text, text_position, label])
 	
 	move_cursor(button_size.y + theme.get_constant("line_separation", "ItemList"), button_size.x + 4)
 	return return_string
 	
 	
 
-
-
 func _draw():
-	var ascent = 12
-	if font == null:
-		font = get_font("")
-	if font:
-		font.get_ascent()
-	for list_id in lists:
-		var list = lists[list_id]
+	var ascent = font.get_ascent()
+	for ctx_idx in contexts:
+		var list = contexts[ctx_idx]
 		if not list.has_draw_data:
 			continue
-		var width = list.width
-		if width == 0:
-			width = list.max_x
-		var size = Vector2(width, list.height)
-		draw_style_box(style_window, Rect2(list.position ,size))
-		var top_left_pad = Vector2(button_normal.content_margin_left, button_normal.content_margin_top)
-		var title_pos = list.position + top_left_pad
-		title_pos.y += ascent - theme.get_constant("title_height", "WindowDialog")
-		draw_string(font, title_pos, list_id)
+		
 		for cmd in list.draw_list:
 			# draw_rect(Rect2(0,0,100,40), Color.white)
 			var type = cmd[0]

@@ -26,7 +26,6 @@ func custom_editor(imgui: ImGui):
 				notes[idx] = buf
 			imgui.same_line()
 			
-		imgui.text("Note #%s" % idx)
 		var note = notes[idx]
 		note = imgui.input_text("content%s" % idx, note)
 		notes[idx] = note
