@@ -71,7 +71,7 @@ var input_escape: bool
 
 var input_unicode: int
 func _input(event):
-	if event is InputEventKey:
+	if event is InputEventKey and has_focus():
 		var key_event: InputEventKey = event
 		if key_event.pressed:
 			if key_event.scancode == KEY_RIGHT:
@@ -90,7 +90,8 @@ func _input(event):
 			input_unicode = key_event.unicode
 			get_tree().set_input_as_handled()
 			
-
+func _enter_tree():
+	focus_mode = Control.FOCUS_ALL
 func _process(delta):
 	
 	mouse_default_cursor_shape = CURSOR_ARROW
@@ -273,11 +274,12 @@ func input_text(id:String, label: String) -> String:
 		if input_enter:
 			focus_path = ""
 			dirty = true
+			release_focus()
 		if input_escape:
 			focus_path = ""
 			return_string = input_text_before_modify
 			dirty = true
-			
+			release_focus()
 			
 		
 		
@@ -287,6 +289,7 @@ func input_text(id:String, label: String) -> String:
 		if pressed:
 			if not focused:
 				input_text_before_modify = label
+				grab_focus()
 			focus_path = my_focus_path
 			input_text_caret_time = 0
 			
