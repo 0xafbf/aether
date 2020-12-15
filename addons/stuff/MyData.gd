@@ -8,6 +8,11 @@ enum MyEnum { A, B }
 
 export(Array, int) var values = []
 
+func imgui_editor(imgui: ImGui):
+	imgui.text("my editor")
+	imgui.text("my editor2")
+	
+
 
 func custom_editor(imgui: ImGui):
 	imgui.text(name)

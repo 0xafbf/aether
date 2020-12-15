@@ -1,10 +1,6 @@
 tool
 extends Control
 
-onready var sidebar: ImGui = $Sidebar
-onready var content: ImGui = $Content
-
-
 
 var editor_interface: EditorInterface
 
@@ -24,36 +20,32 @@ func set_preview_objects(in_preview):
 	refresh_objects_names()
 	
 func refresh_objects_names():
-	print("refreshing names")
 	editing_objects_names.resize(len(editing_objects))
 	for obj_idx in len(editing_objects):
 		
 		var name = editing_objects[obj_idx].resource_path.get_file().get_basename()
 		editing_objects_names[obj_idx] = name
 
-func _enter_tree():
-	print("panel: enter tree")
-
 func _process(delta):
-	
-	sidebar.begin("Files")
+	var sidebar: ImGui = $Sidebar
+	var content: ImGui = $Content
+
+	sidebar.begin()
 	for idx in len(editing_objects):
 		var obj_name = editing_objects_names[idx]
 		if sidebar.button(obj_name):
 			current_edit_object = idx
-	sidebar.end()
-	
+
 	var edited_obj: Resource = null
 	if current_edit_object >= len(editing_objects):
 		current_edit_object = len(editing_objects)-1
 	if current_edit_object > -1:
 		edited_obj = editing_objects[current_edit_object]
 	if edited_obj:
-		content.begin(edited_obj.resource_path)
+		content.begin()
 		content.set_dirty(false)
 		edited_obj.custom_editor(content)
-		content.end()
-			
+
 func edit(obj):
 	current_edit_object = editing_objects.find(obj)
 	if current_edit_object == -1:

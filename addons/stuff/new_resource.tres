@@ -6,4 +6,4 @@
 script = ExtResource( 1 )
 a = 17.263
 name = "arstarsarstarstarst"
-values = [ 0, -8, -8, 0, 32, 80, -4, -2048, -8, -2048 ]
+values = [ 0, -8, -8, 0, 32, 80, -4, -2048, -8 ]

@@ -38,18 +38,18 @@ height = 4.92743
 depth = 6.09823
 material = ExtResource( 2 )
 
-[node name="CSGBox3" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.27499, 1.5704, -4.99908 )
-width = 2.66832
-height = 4.92743
-depth = 6.09823
-material = ExtResource( 2 )
-
 [node name="CSGBox4" type="CSGBox" parent="CSGCombiner"]
 transform = Transform( 1, 0, 0, 0, 0.773949, 0.633248, 0, -0.633248, 0.773949, -3.51215, -0.66592, 12.8399 )
 width = 3.10622
 height = 7.7491
 depth = 8.17634
+material = ExtResource( 2 )
+
+[node name="CSGBox3" type="CSGBox" parent="CSGCombiner/CSGBox4"]
+transform = Transform( 1, 0, 0, 0, 0.773949, -0.633248, 0, 0.633248, 0.773949, -2.76284, 13.0273, -12.3903 )
+width = 2.66832
+height = 4.92743
+depth = 6.09823
 material = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

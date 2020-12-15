@@ -3,4 +3,5 @@
 [ext_resource path="res://addons/ab_framework/ProggyClean.ttf" type="DynamicFontData" id=1]
 
 [resource]
+size = 32
 font_data = ExtResource( 1 )

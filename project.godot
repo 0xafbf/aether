@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/ab_framework/imgui.gd"
 }, {
+"base": "ImGui",
+"class": "ImGuiEditor",
+"language": "GDScript",
+"path": "res://addons/ab_framework/imgui_editor.gd"
+}, {
 "base": "Resource",
 "class": "MyData",
 "language": "GDScript",
@@ -50,6 +55,7 @@ _global_script_class_icons={
 "BrushMode": "",
 "Character": "",
 "ImGui": "",
+"ImGuiEditor": "",
 "MyData": "",
 "Note": ""
 }
@@ -68,6 +74,7 @@ VisualDebugger="*res://addons/ab_framework/visual_debugger.tscn"
 
 window/size/width=1280
 window/size/height=720
+window/vsync/use_vsync=false
 
 [editor_plugins]
 

@@ -1,6 +1,6 @@
 extends Node
 
-onready var imgui = VisualDebugger.imgui
+onready var imgui: ImGui = VisualDebugger.imgui
 
 var count = 0
 var scores = []
@@ -10,8 +10,12 @@ func _process(_delta):
 	
 	var mouse_position = get_viewport().get_mouse_position()
 	
-	imgui.begin("demo")
+	imgui.begin()
 	
+	var fps = 0
+	if _delta != 0:
+		fps = 1/_delta
+	imgui.text("FPS: %f" % fps)
 	imgui.text("input demo:")
 	demo_text = imgui.input_text("name", demo_text)
 	imgui.text("hola, %s!" % demo_text)
@@ -30,6 +34,3 @@ func _process(_delta):
 		
 		imgui.same_line()
 		imgui.text("score %d: %d" % [idx, scores[idx]])
-		
-
-	imgui.end()

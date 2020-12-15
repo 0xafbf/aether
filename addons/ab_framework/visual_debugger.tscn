@@ -16,6 +16,7 @@ cast_to = Vector3( 0, 0, -1000 )
 [node name="Control" type="Control" parent="."]
 margin_right = 612.0
 margin_bottom = 450.0
+focus_mode = 2
 theme = ExtResource( 3 )
 script = ExtResource( 2 )
 __meta__ = {
