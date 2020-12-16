@@ -53,6 +53,6 @@ depth = 6.09823
 material = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77327, 3.06345, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77327, 3.06345, 2.51213 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 3 )

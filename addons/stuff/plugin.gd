@@ -4,6 +4,7 @@ const PanelScene = preload("res://addons/stuff/DockStuff.tscn")
 var panel
 
 func _enter_tree():
+	print("plugin enter tree")
 	panel = PanelScene.instance()
 	panel.editor_interface = get_editor_interface()
 	get_editor_interface().get_editor_viewport().add_child(panel)
@@ -46,9 +47,12 @@ func get_plugin_icon():
 	return icon
 	
 func handles(obj):
-	return obj.has_method("custom_editor")
+	var does_handle = obj.has_method("custom_editor")
+	print("handles: %s" % does_handle)
+	return does_handle
 	
 func edit(obj):
+	print("editing")
 	panel.edit(obj)
 	
 func _exit_tree():

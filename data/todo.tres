@@ -1,7 +1,24 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://data/notes.gd" type="Script" id=1]
+[ext_resource path="res://data/note.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+text = "Hola"
+done = false
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+text = "trst"
+done = true
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+text = "raarstsart"
+done = true
 
 [resource]
 script = ExtResource( 1 )
-notes = PoolStringArray( "hacer que el text input haga clip del texto", "push_id para varios campos con mismo label", "hacer que ctrl+delete borre una palabra", "funcion para dibujar contenedor", "hacer input de numeros", "pensar solucion para enums", "quitar sistema de windows", "hacer un texto multi-line", "hacer ejemplo de calculadora", "mover imgui a su propia seccion", "hacer checkbox", "hacer combobox", "hacer tabs" )
+notes = PoolStringArray( "hacer que el text input haga clip del texto", "push_id para varios campos con mismo label", "hacer que ctrl+delete borre una palabra", "funcion para dibujar contenedor", "hacer input de numeros", "pensar solucion para enums", "quitar sistema de windows", "hacer un texto multi-line", "hacer ejemplo de calculadora", "mover imgui a su propia seccion", "hacer checkbox", "hacer combobox", "hacer tabs", "", "", "", "" )
+notes2 = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
