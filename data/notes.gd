@@ -1,11 +1,28 @@
 tool
 extends Resource
-class_name Note
+
+var Note = preload("res://data/note.gd")
+
 export var notes: PoolStringArray = []
+
+
+export var notes2: Array = []
 
 func custom_editor(imgui: ImGui):
 
 	imgui.text("total notes: %s" % len(notes))	
+	
+	if imgui.button("Add note2"):
+		notes2.append(Note.new())
+	
+	var num_notes2 = len(notes2)
+	for idx in num_notes2:
+		var note = notes2[idx]
+		note.text = imgui.input_text("note2_%d"%idx, note.text)
+		imgui.same_line()
+		note.done = imgui.checkbox("done", note.done)
+		
+	
 	if imgui.button("Add Note"):
 		notes.append("")
 

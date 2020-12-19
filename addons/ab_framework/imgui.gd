@@ -22,14 +22,20 @@ var button_hover: StyleBox
 var button_pressed: StyleBox
 var label_text_color: Color
 var button_text_color: Color
+var button_text_color_pressed: Color
 
 var input_normal: StyleBox
 var input_focus: StyleBox
 
 var style_window: StyleBox
 
+var checkbox_unchecked: Texture
+var checkbox_checked: Texture
+
 var input_width = 200
 var font: Font
+var ascent: float
+var font_height: float
 
 var dummy = refresh_styles()
 onready var dummy2 = refresh_styles()
@@ -37,6 +43,7 @@ onready var dummy2 = refresh_styles()
 func refresh_styles():
 	label_text_color = get_color("font_color", "Label")
 	button_text_color = get_color("font_color", "Button")
+	button_text_color_pressed = get_color("font_color_pressed", "CheckButton")
 	
 	button_normal = get_stylebox("normal", "Button")
 	button_hover = get_stylebox("hover", "Button")
@@ -47,6 +54,11 @@ func refresh_styles():
 
 	style_window = get_stylebox("panel", "WindowDialog")
 	font = get_font("")
+	ascent = font.get_ascent()
+	font_height = font.get_height()
+	
+	checkbox_unchecked = get_icon("unchecked", "CheckBox")
+	checkbox_checked   = get_icon("checked", "CheckBox")
 
 var delta_time: float = 0
 
@@ -55,6 +67,7 @@ enum {
 	Draw_Type_Stylebox,
 	Draw_Type_Text,
 	Draw_Type_Line,
+	Draw_Type_Texture,
 }
 var prev_buttons: int
 
@@ -182,6 +195,95 @@ func tabs(enums: Dictionary, base: int) -> int:
 		pass
 	return 0
 
+func toggle(label: String, previous: bool) -> bool:
+	var string_size = font.get_string_size(label)
+	var top_left_pad = Vector2(button_normal.content_margin_left, button_normal.content_margin_top)
+	var bot_right_pad = Vector2(button_normal.content_margin_right, button_normal.content_margin_bottom)
+	
+	var button_size = string_size + top_left_pad + bot_right_pad
+	var button_position = draw_cursor + position
+	var rect = Rect2(button_position, button_size)
+	var text_position = button_position + top_left_pad
+	var mouse_local = mouse - rect_global_position
+	var inside = rect.has_point(mouse_local)
+	
+	var pressed = false
+	
+	var button_color = button_normal
+	if inside:
+		button_color = button_hover
+
+		pressed = mouse_released(0)
+		# if holding:
+		if 1 & mouse_buttons:
+			button_color = button_pressed
+	
+	draw_list.append([Draw_Type_Stylebox, button_color, rect])
+	var color = button_text_color_pressed if previous else button_text_color
+	queue_text(label, text_position, color)
+	
+	
+	var separation_y = get_constant("line_separation", "ItemList")
+	move_cursor(button_size.y + separation_y, button_size.x + 4)
+	dirty = dirty or pressed
+	
+	if pressed:
+		return !previous
+	return previous
+
+
+func checkbox(label: String, previous: bool) -> bool:
+	var string_size = font.get_string_size(label)
+	var top_left_pad = Vector2(button_normal.content_margin_left, button_normal.content_margin_top)
+	var bot_right_pad = Vector2(button_normal.content_margin_right, button_normal.content_margin_bottom)
+	
+	
+	var check_texture: Texture = checkbox_checked if previous else checkbox_unchecked
+	var check_size: Vector2 = check_texture.get_size()
+	
+	var button_size = string_size + top_left_pad + bot_right_pad
+	button_size.x += check_size.x
+	
+	var button_position = draw_cursor + position
+	var rect = Rect2(button_position, button_size)
+	
+	
+	var text_position = button_position + top_left_pad
+	text_position.x += check_size.x
+	
+	var mouse_local = mouse - rect_global_position
+	var inside = rect.has_point(mouse_local)
+	
+	var pressed = false
+	
+	var button_color = button_normal
+	if inside:
+		button_color = button_hover
+
+		pressed = mouse_released(0)
+		# if holding:
+		if 1 & mouse_buttons:
+			button_color = button_pressed
+	
+	var new: bool = previous
+	if pressed:
+		new = !previous
+	
+	var checkbox_position = button_position
+	var delta = (font_height - check_size.y) * 0.5 + top_left_pad.y
+	checkbox_position.y += delta 
+	_queue_texture(check_texture, checkbox_position)
+	
+	var color = button_text_color_pressed if new else button_text_color
+	queue_text(label, text_position, color)
+	
+	
+	var separation_y = get_constant("line_separation", "ItemList")
+	move_cursor(button_size.y + separation_y, button_size.x + 4)
+	dirty = dirty or pressed
+	
+	return new	
+
 func move_cursor(downward: int, sideways: int):
 	if sameline:
 		sameline = false
@@ -201,6 +303,9 @@ func text(in_string: String):
 
 func queue_text(in_string: String, in_position: Vector2, in_color: Color):
 	draw_list.append([Draw_Type_Text, in_position, in_string, in_color])
+
+func _queue_texture(in_texture: Texture, in_position: Vector2):
+	draw_list.append([Draw_Type_Texture, in_texture, in_position])
 
 var focus_path: String
 var input_text_before_modify: String
@@ -297,7 +402,7 @@ func input_text(id:String, in_string: String) -> String:
 		var substring = in_string.substr(0, input_text_cursor)
 		var size = font.get_string_size(substring)
 		var start = text_position + Vector2(size.x, 0)
-		var end = text_position + Vector2(size.x, font.get_ascent())
+		var end = text_position + Vector2(size.x, ascent)
 		draw_list.append([Draw_Type_Line, start, end, Color.white])	
 		
 	queue_text(in_string, text_position, label_text_color)
@@ -307,7 +412,6 @@ func input_text(id:String, in_string: String) -> String:
 	
 
 func _draw():
-	var ascent = font.get_ascent()
 	if has_draw_data:	
 		for cmd in draw_list:
 			# draw_rect(Rect2(0,0,100,40), Color.white)
@@ -323,5 +427,10 @@ func _draw():
 				var end = cmd[2]
 				var color = cmd[3]
 				draw_line(start, end, color)
+			elif type == Draw_Type_Texture:
+				var texture: Texture = cmd[1]
+				var position: Vector2 = cmd[2]
+				draw_texture(texture, position)
+				
 	reset_draw_lists()
 
