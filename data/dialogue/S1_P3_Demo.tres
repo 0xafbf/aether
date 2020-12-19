@@ -1,0 +1,33 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://data/dialogue/dialogue.gd" type="Script" id=1]
+[ext_resource path="res://data/dialogue/dialogue_line.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+text = "hola"
+mood = 0
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+text = "mi"
+mood = 0
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+text = "nombre\\"
+mood = 0
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 2 )
+text = "es"
+mood = 0
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 2 )
+text = "andres"
+mood = 0
+
+[resource]
+script = ExtResource( 1 )
+lines = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
