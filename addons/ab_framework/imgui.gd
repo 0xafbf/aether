@@ -176,6 +176,12 @@ func button(label: String) -> bool:
 	
 	return pressed
 
+func tabs(enums: Dictionary, base: int) -> int:
+	for key in enums:
+		var selected = base == enums[key]
+		pass
+	return 0
+
 func move_cursor(downward: int, sideways: int):
 	if sameline:
 		sameline = false
@@ -201,14 +207,14 @@ var input_text_before_modify: String
 var input_text_cursor: int
 var input_text_caret_time: float
 
-func input_text(id:String, label: String) -> String:
-	var return_string = label
+func input_text(id:String, in_string: String) -> String:
+	var return_string = in_string
 	# @FocusPath
 	var my_focus_path = PoolStringArray(["", id]).join("/")
 	
 	var focused = focus_path == my_focus_path
 	
-	var string_size = font.get_string_size(label)
+	var string_size = font.get_string_size(in_string)
 	var top_left_pad = Vector2(button_normal.content_margin_left, button_normal.content_margin_top)
 	var bot_right_pad = Vector2(button_normal.content_margin_right, button_normal.content_margin_bottom)
 	
@@ -232,7 +238,7 @@ func input_text(id:String, label: String) -> String:
 		if input_left:
 			input_text_caret_time = 0
 			input_text_cursor -= 1
-		input_text_cursor = clamp(input_text_cursor, 0, len(label))
+		input_text_cursor = clamp(input_text_cursor, 0, len(in_string))
 		
 		if input_backspace:
 			if input_text_cursor > 0:
@@ -242,7 +248,7 @@ func input_text(id:String, label: String) -> String:
 				dirty = true
 				
 		if input_delete:
-			if input_text_cursor < len(label):
+			if input_text_cursor < len(in_string):
 				
 				input_text_caret_time = 0
 				return_string.erase(input_text_cursor, 1)
@@ -270,7 +276,7 @@ func input_text(id:String, label: String) -> String:
 		pressed = mouse_released(0)
 		if pressed:
 			if not focused:
-				input_text_before_modify = label
+				input_text_before_modify = in_string
 				grab_focus()
 			focus_path = my_focus_path
 			input_text_caret_time = 0
@@ -278,8 +284,8 @@ func input_text(id:String, label: String) -> String:
 			var x_from_string_start = mouse_local.x - text_position.x
 			var count_from_start = 0
 			var pos_from_start: float = 0
-			while count_from_start < len(label) and pos_from_start < x_from_string_start:
-				var s = label[count_from_start]
+			while count_from_start < len(in_string) and pos_from_start < x_from_string_start:
+				var s = in_string[count_from_start]
 				var c: int = ord(s)
 				var char_width = font.get_char_size(c)
 				pos_from_start += char_width.x
@@ -288,13 +294,13 @@ func input_text(id:String, label: String) -> String:
 	
 	draw_list.append([Draw_Type_Stylebox, button_color, rect])	
 	if focused and input_text_caret_time < 0.5:
-		var substring = label.substr(0, input_text_cursor)
+		var substring = in_string.substr(0, input_text_cursor)
 		var size = font.get_string_size(substring)
 		var start = text_position + Vector2(size.x, 0)
 		var end = text_position + Vector2(size.x, font.get_ascent())
 		draw_list.append([Draw_Type_Line, start, end, Color.white])	
 		
-	queue_text(label, text_position, label_text_color)
+	queue_text(in_string, text_position, label_text_color)
 	
 	move_cursor(button_size.y + get_constant("line_separation", "ItemList"), button_size.x + 4)
 	return return_string
