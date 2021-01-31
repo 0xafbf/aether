@@ -8,18 +8,15 @@ enum MyEnum { A, B }
 
 export(Array, int) var values = []
 
-func imgui_editor(imgui: ImGui):
-	imgui.text("my editor")
-	imgui.text("my editor2")
-	
-
-
 func custom_editor(imgui: ImGui):
+	imgui.text(name)
+	imgui.text(name)
 	imgui.text(name)
 	imgui.text("array count:  %s" % len(values))
 	if imgui.button("decir Hola"):
 		print("hola")
 	
+	imgui.same_line()
 	if imgui.button("Add"):
 		values.append(0)
 	var remove_idx = -1

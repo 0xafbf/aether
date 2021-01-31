@@ -1,33 +1,115 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=21 format=2]
 
 [ext_resource path="res://data/dialogue/dialogue.gd" type="Script" id=1]
 [ext_resource path="res://data/dialogue/dialogue_line.gd" type="Script" id=2]
+[ext_resource path="res://data/dialogue/CharA.tres" type="Resource" id=3]
+[ext_resource path="res://data/dialogue/CharB.tres" type="Resource" id=4]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
-text = "hola"
-mood = 0
+text = null
+character = ExtResource( 3 )
+line_type = 0
+options = [  ]
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
 text = "mi"
-mood = 0
+character = ExtResource( 3 )
+line_type = 0
+options = [  ]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 2 )
-text = "nombre\\"
-mood = 0
+text = "que quieres hacer?"
+character = ExtResource( 4 )
+line_type = 0
+options = [  ]
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 2 )
 text = "es"
-mood = 0
+character = ExtResource( 3 )
+line_type = 0
+options = [  ]
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 2 )
-text = "andres"
-mood = 0
+text = "andressphfpgjs"
+character = ExtResource( 4 )
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 2 )
+text = ""
+character = ExtResource( 3 )
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 2 )
+text = ""
+character = ExtResource( 3 )
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 2 )
+text = ""
+character = ExtResource( 4 )
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [  ]
+
+[sub_resource type="Resource" id=13]
+script = ExtResource( 2 )
+text = ""
+character = ExtResource( 3 )
+line_type = 0
+options = [ "" ]
+
+[sub_resource type="Resource" id=14]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [ "", "", "", "", "", "", "", "", "", "", "" ]
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [ "", "", "", "", "", "", "", "", "", "", "" ]
+
+[sub_resource type="Resource" id=16]
+script = ExtResource( 2 )
+text = ""
+line_type = 0
+options = [ "", "", "", "", "", "", "", "", "", "", "" ]
 
 [resource]
 script = ExtResource( 1 )
-lines = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
+lines = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ]

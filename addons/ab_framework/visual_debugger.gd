@@ -97,7 +97,7 @@ func _process(delta):
 	camera.global_translate(horizontal * basis.x * delta * cam_speed)
 	camera.global_translate(vertical * -basis.z * delta * cam_speed)
 	
-	imgui.begin("Inspector")
+	imgui.begin()
 	var pointed_object: Spatial = $Camera/RayCast.get_collider()
 	if pointed_object:
 		var s = pointed_object
@@ -126,8 +126,6 @@ func _process(delta):
 #					if prop.usage & 1<<bit:
 #						imgui.text("FLAG: %d" % (1<<bit))
 					
-		
-	imgui.end()
 	
 	
 	

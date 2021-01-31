@@ -22,10 +22,15 @@ func custom_editor(imgui: ImGui):
 		imgui.same_line()
 		note.done = imgui.checkbox("done", note.done)
 		
+		note.direction = imgui.button_group("type", Note.Direction, note.direction)
 	
 	if imgui.button("Add Note"):
 		notes.append("")
 
+	if imgui.get_dirty():
+		property_list_changed_notify()
+	return
+###########################3
 	var num_notes = len(notes)
 	for idx in num_notes:
 		#imgui.push_id(idx)
