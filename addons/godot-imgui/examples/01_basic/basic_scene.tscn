@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-imgui/resources/gui_theme_pixel.tres" type="Theme" id=1]
+[ext_resource path="res://addons/godot-imgui/examples/01_basic/basic_imgui.gd" type="Script" id=2]
+
+[node name="Node" type="Node"]
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 2
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

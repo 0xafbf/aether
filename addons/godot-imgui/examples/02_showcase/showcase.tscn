@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-imgui/examples/02_showcase/showcase.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-imgui/resources/gui_theme_pixel.tres" type="Theme" id=2]
+
+[node name="Node" type="Node"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 118.0, 122.25 ]
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+focus_mode = 2
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

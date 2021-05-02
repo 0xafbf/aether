@@ -9,27 +9,34 @@ var demo_text = "hola"
 func _process(_delta):
 	
 	imgui.begin()
-
-	
 	var mouse_position2 = get_viewport().get_mouse_position()
+	
 	imgui.text("mouse: %s" % mouse_position2)
-	
-	
+
 	demo_text = imgui.input_text("mi_texto", demo_text)
-	imgui.text(demo_text)
+	imgui.text("Hola, %s" % demo_text)
+
+
+	if imgui.button("mi boton"):
+		scores.append(5)
+	if imgui.button("add 10"):
+		scores.append(10)
 	
+
 	for idx in len(scores):
-		imgui.text("scoe: %d" % scores[idx])
-		imgui.same_line()
 		if imgui.button("-"):
 			scores[idx] -= 1
 		imgui.same_line()
+		
 		if imgui.button("+"):
 			scores[idx] += 1
+		imgui.same_line()
+		
+		imgui.text("score: %d" % scores[idx])
+		
 		
 	
-	if imgui.button("mi boton"):
-		scores.append(5)
+
 	
 	
 	

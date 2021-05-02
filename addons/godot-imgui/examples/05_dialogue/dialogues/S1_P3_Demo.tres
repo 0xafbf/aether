@@ -1,0 +1,31 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://addons/godot-imgui/examples/05_dialogue/src/dialogue.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-imgui/examples/05_dialogue/src/dialogue_line.gd" type="Script" id=2]
+[ext_resource path="res://addons/godot-imgui/examples/05_dialogue/characters/Alice.tres" type="Resource" id=3]
+[ext_resource path="res://addons/godot-imgui/examples/05_dialogue/characters/Bob.tres" type="Resource" id=4]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+text = "arstttttafrt"
+character = ExtResource( 3 )
+line_type = 1
+options = [ "111ffff", "33333", "123" ]
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+text = "rst"
+character = ExtResource( 4 )
+line_type = 1
+options = [ "222", "331" ]
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+text = "ffffffffaaaaaaaaarrrrrrrrrt"
+character = ExtResource( 3 )
+line_type = 2
+options = [ "444" ]
+
+[resource]
+script = ExtResource( 1 )
+lines = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]

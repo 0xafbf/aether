@@ -32,32 +32,32 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "Dialogue",
 "language": "GDScript",
-"path": "res://data/dialogue/dialogue.gd"
+"path": "res://addons/godot-imgui/examples/05_dialogue/src/dialogue.gd"
 }, {
 "base": "Resource",
 "class": "Dialogue_Character",
 "language": "GDScript",
-"path": "res://data/dialogue/dialogue_character.gd"
+"path": "res://addons/godot-imgui/examples/05_dialogue/src/dialogue_character.gd"
 }, {
 "base": "Control",
 "class": "ImGui",
 "language": "GDScript",
-"path": "res://addons/godot_imgui/scripts/imgui.gd"
+"path": "res://addons/godot-imgui/src/imgui.gd"
 }, {
 "base": "Resource",
 "class": "ImGuiDemo_Ability",
 "language": "GDScript",
-"path": "res://addons/godot_imgui/samples/resource_editor/ability.gd"
+"path": "res://addons/godot-imgui/examples/04_resource_editor/ability.gd"
 }, {
 "base": "Resource",
 "class": "ImGuiDemo_Weapon",
 "language": "GDScript",
-"path": "res://addons/godot_imgui/samples/resource_editor/weapon.gd"
+"path": "res://addons/godot-imgui/examples/04_resource_editor/weapon.gd"
 }, {
 "base": "ImGui",
 "class": "ImGuiEditor",
 "language": "GDScript",
-"path": "res://addons/godot_imgui/scripts/imgui_editor.gd"
+"path": "res://addons/godot-imgui/src/imgui_editor.gd"
 }, {
 "base": "Resource",
 "class": "MyData",
@@ -96,7 +96,7 @@ window/vsync/use_vsync=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "godot-plugin-refresher", "godot_imgui" )
+enabled=PoolStringArray( "res://addons/godot-imgui/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
 
 [input]
 

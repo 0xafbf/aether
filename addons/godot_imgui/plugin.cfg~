@@ -1,7 +1,0 @@
-[plugin]
-
-name="Godot Editor IMGUI"
-description="Adds IMGUI functionality to the editor."
-author="Andrés Botero"
-version="0.1"
-script="imgui_plugin.gd"

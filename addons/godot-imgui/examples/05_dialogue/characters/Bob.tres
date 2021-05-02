@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-imgui/examples/05_dialogue/src/dialogue_character.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+name = "Bob"
+face = ExtResource( 2 )

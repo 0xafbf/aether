@@ -5,11 +5,10 @@ var Note = preload("res://data/note.gd")
 
 export var notes: PoolStringArray = []
 
-
 export var notes2: Array = []
 
 func custom_editor(imgui: ImGui):
-
+	imgui.begin()
 	imgui.text("total notes: %s" % len(notes))	
 	
 	if imgui.button("Add note2"):

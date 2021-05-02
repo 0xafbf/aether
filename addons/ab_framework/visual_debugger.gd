@@ -49,6 +49,7 @@ func _input(event):
 
 
 func toggle_debugging():
+	print("toggling debugger")
 	if not debugging:
 		debugging = true
 		var current_cam = get_viewport().get_camera()

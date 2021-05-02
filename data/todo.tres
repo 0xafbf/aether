@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=10 format=2]
+[gd_resource type="Resource" load_steps=13 format=2]
 
 [ext_resource path="res://data/notes.gd" type="Script" id=1]
 [ext_resource path="res://data/note.gd" type="Script" id=2]
@@ -7,37 +7,37 @@
 script = ExtResource( 2 )
 text = "Hola"
 done = true
-direction = 2
+direction = 0
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
 text = "trst"
 done = true
-direction = 3
+direction = 0
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 2 )
 text = "raarstsart"
 done = true
-direction = 3
+direction = 0
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 2 )
 text = ""
 done = true
-direction = 2
+direction = 0
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 2 )
 text = ""
 done = true
-direction = 1
+direction = 0
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 2 )
 text = ""
 done = false
-direction = 2
+direction = 0
 
 [sub_resource type="Resource" id=7]
 script = ExtResource( 2 )
@@ -45,7 +45,25 @@ text = ""
 done = false
 direction = 0
 
+[sub_resource type="Resource" id=8]
+script = ExtResource( 2 )
+text = ""
+done = false
+direction = 0
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 2 )
+text = ""
+done = false
+direction = 0
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 2 )
+text = ""
+done = false
+direction = 0
+
 [resource]
 script = ExtResource( 1 )
-notes = PoolStringArray( "hacer que el text input haga clip del texto", "hacer input de numeros", "push_id para varios campos con mismo label", "hacer que ctrl+delete borre una palabra", "funcion para dibujar contenedor", "pensar solucion para enums", "quitar sistema de windows", "hacer un texto multi-line", "hacer ejemplo de calculadora", "mover imgui a su propia seccion", "hacer checkbox", "hacer combobox", "hacer tabs", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" )
-notes2 = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ]
+notes = PoolStringArray( "hacer que el text input haga clip del texto", "hacer input de numeros", "push_id para varios campos con mismo label", "hacer que ctrl+delete borre una palabra", "funcion para dibujar contenedor", "pensar solucion para enums", "quitar sistema de windows", "hacer un texto multi-line", "hacer ejemplo de calculadora", "mover imgui a su propia seccion", "hacer checkbox", "hacer combobox", "hacer tabs", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" )
+notes2 = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ]
