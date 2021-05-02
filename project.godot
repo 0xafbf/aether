@@ -9,26 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spatial",
-"class": "Brick",
-"language": "GDScript",
-"path": "res://src/Brick.gd"
-}, {
-"base": "Spatial",
-"class": "Brush",
-"language": "GDScript",
-"path": "res://src/Brush.gd"
-}, {
-"base": "Reference",
-"class": "BrushMode",
-"language": "GDScript",
-"path": "res://src/brush_mode.gd"
-}, {
-"base": "KinematicBody",
-"class": "Character",
-"language": "GDScript",
-"path": "res://src/character.gd"
-}, {
 "base": "Resource",
 "class": "Dialogue",
 "language": "GDScript",
@@ -58,35 +38,21 @@ _global_script_classes=[ {
 "class": "ImGuiEditor",
 "language": "GDScript",
 "path": "res://addons/godot-imgui/src/imgui_editor.gd"
-}, {
-"base": "Resource",
-"class": "MyData",
-"language": "GDScript",
-"path": "res://addons/stuff/MyData.gd"
 } ]
 _global_script_class_icons={
-"Brick": "",
-"Brush": "",
-"BrushMode": "",
-"Character": "",
 "Dialogue": "",
 "Dialogue_Character": "",
 "ImGui": "",
 "ImGuiDemo_Ability": "",
 "ImGuiDemo_Weapon": "",
-"ImGuiEditor": "",
-"MyData": ""
+"ImGuiEditor": ""
 }
 
 [application]
 
-config/name="aether"
-run/main_scene="res://assets/levels/World.tscn"
+config/name="godot-imgui"
+run/main_scene="res://addons/godot-imgui/examples/01_basic/basic_scene.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-VisualDebugger="*res://addons/ab_framework/visual_debugger.tscn"
 
 [display]
 
@@ -96,7 +62,7 @@ window/vsync/use_vsync=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/godot-imgui/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/godot-imgui/plugin.cfg" )
 
 [input]
 
@@ -204,10 +170,7 @@ aim_left={
 [layer_names]
 
 3d_physics/layer_1="All"
-3d_physics/layer_2="Bricks"
-3d_physics/layer_3="BrickHandle"
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
-environment/default_environment="res://default_env.tres"

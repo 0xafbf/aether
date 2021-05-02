@@ -1,3 +1,0 @@
-
-
-* ventana vacia no esta dibujando fondo.
