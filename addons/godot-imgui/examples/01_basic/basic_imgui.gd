@@ -29,6 +29,17 @@ func _process(delta):
 	text("Hello, World!")
 	
 	space(10)
+	text("Buttons can be created easily with the `button` function. You can")
+	text("find if the button was clicked by checking the return value")
+	
+	if button("Print to console!"):
+		print("Clicked!")
+	
+	space(10)
+	text("You can see this UI drawn inside the editor because the script")
+	text("has the `tool` keyword")
+	
+	space(10)
 	text("You can add space to the UI layout with the `space` function")
 	
 	space(10)
@@ -38,6 +49,7 @@ func _process(delta):
 	text("Hello, %s!" % username)
 	text("Keep in mind that although this script has the `tool` keyword, you")
 	text("can't interact with text fields from the editor window.")
+	
 	"""
 	space(10)
 	text("some UI functions take references so they edit the data in-place")
@@ -48,17 +60,11 @@ func _process(delta):
 	"""
 	
 	space(10)
-	text("ImGUI techniques allow you to create dynamic UIs easily, just create")
-	text("UI elements with the desired data")
+	text("ImGUI techniques allow you to create dynamic UIs easily, just call")
+	text("functions for UI elements with the desired data")
 	var mouse_position = get_viewport().get_mouse_position()
 	text("Mouse: %s" % mouse_position)
 	
-	space(10)
-	text("Buttons can be created easily with the `button` function. You can")
-	text("find if the button was clicked by checking the return value")
-	
-	if button("Print to console!"):
-		print("Clicked!")
 	
 	space(10)
 	text("ImGui makes it really easy to create UIs from dynamic data like")
